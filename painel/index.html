@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel de Conteúdo · Facilite</title>
+<link rel="icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Padrão visual ISCA Agência: amarelo #FFD400, preto #101010, fundo papel #FBFBF9 */
+  :root {
+    --amarelo: #FFD400; --amarelo-fundo: #E8B800; --tinta: #101010; --tinta-suave: #3a3a36;
+    --cinza: #716e64; --linha: #e5e2dc; --papel: #FBFBF9; --cartao: #FFFFFF; --papel-2: #f3f2ee;
+    --ok: #0f9d6a; --ok-fundo: #e3f5ec; --erro: #d93a2b; --erro-fundo: #fbe7e4;
+    --azul: #2456d6; --azul-fundo: #e6edfc; --aviso-fundo: #fff6c7;
+    --raio: 14px; --sombra: 0 1px 2px rgba(16,16,16,.05), 0 8px 24px rgba(16,16,16,.06);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: Manrope, system-ui, sans-serif; background: var(--papel); color: var(--tinta);
+         font-size: 15px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  a { color: inherit; }
+  .esconde { display: none !important; }
+
+  /* Login */
+  .login { min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; }
+  .login-caixa { width: 100%; max-width: 380px; background: var(--cartao); border: 1px solid var(--linha);
+                 border-radius: 20px; padding: 32px 28px; box-shadow: var(--sombra); }
+  .marca { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -.01em; }
+  .marca .selo { width: 34px; height: 34px; border-radius: 10px; background: var(--amarelo); display: grid; place-items: center;
+                 font-weight: 800; font-size: 18px; color: var(--tinta); }
+  .marca small { display: block; font-weight: 600; color: var(--cinza); font-size: 12px; letter-spacing: .02em; }
+  .login h1 { font-size: 24px; margin: 26px 0 6px; letter-spacing: -.02em; }
+  .login p { color: var(--cinza); margin: 0 0 20px; }
+  label { display: block; font-weight: 700; font-size: 13px; margin: 0 0 6px; }
+  .campo { width: 100%; padding: 12px 14px; border: 1.5px solid var(--linha); border-radius: 12px; background: var(--cartao); outline: none; }
+  .campo:focus { border-color: var(--tinta); }
+  textarea.campo { resize: vertical; min-height: 120px; line-height: 1.5; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px solid var(--tinta);
+         background: var(--tinta); color: #fff; font-weight: 700; padding: 11px 18px; border-radius: 999px; cursor: pointer;
+         transition: transform .12s ease, background .12s ease; white-space: nowrap; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:disabled { opacity: .5; cursor: default; transform: none; }
+  .btn-amarelo { background: var(--amarelo); border-color: var(--amarelo); color: var(--tinta); }
+  .btn-amarelo:hover { background: var(--amarelo-fundo); border-color: var(--amarelo-fundo); }
+  .btn-claro { background: transparent; color: var(--tinta); border-color: var(--linha); }
+  .btn-claro:hover { border-color: var(--tinta); }
+  .btn-perigo { background: transparent; color: var(--erro); border-color: #f0c4be; }
+  .btn-perigo:hover { border-color: var(--erro); }
+  .btn-cheio { width: 100%; margin-top: 16px; padding: 13px; }
+  .msg { margin-top: 12px; font-size: 14px; font-weight: 600; }
+  .msg.ruim { color: var(--erro); }
+  .msg.boa { color: var(--ok); }
+
+  /* Topo */
+  .topo-abas { position: sticky; top: 0; z-index: 5; }
+  .topo { position: relative; z-index: 6; background: rgba(251,251,249,.92); backdrop-filter: blur(10px);
+          border-bottom: 1px solid var(--linha); }
+  .topo-in { max-width: 1180px; margin: 0 auto; padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .topo .acoes { margin-left: auto; display: flex; gap: 8px; }
+  .topo .btn { padding: 8px 14px; font-size: 14px; }
+  .abas { max-width: 1180px; margin: 0 auto; padding: 0 16px; display: flex; gap: 4px; overflow-x: auto; }
+  .aba { border: 0; background: none; padding: 10px 14px 12px; font-weight: 700; color: var(--cinza); cursor: pointer;
+         border-bottom: 3px solid transparent; white-space: nowrap; }
+  .aba.ativa { color: var(--tinta); border-bottom-color: var(--amarelo); }
+  .aba .cont { display: inline-block; min-width: 22px; padding: 0 6px; margin-left: 6px; border-radius: 999px;
+               background: var(--papel-2); color: var(--tinta-suave); font-size: 12px; line-height: 20px; text-align: center; }
+
+  main { max-width: 1180px; margin: 0 auto; padding: 22px 16px 80px; }
+
+  /* Resumo */
+  .resumo { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 26px; }
+  .numero { background: var(--cartao); border: 1px solid var(--linha); border-radius: var(--raio); padding: 16px 18px; }
+  .numero b { display: block; font-size: 30px; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
+  .numero span { color: var(--cinza); font-size: 13px; font-weight: 600; }
+  .numero.destaque { background: var(--amarelo); border-color: var(--amarelo); }
+  .numero.destaque span { color: var(--tinta-suave); }
+  .numero.alerta b { color: var(--erro); }
+
+  .proximo { display: flex; gap: 16px; align-items: center; background: var(--tinta); color: #fff; border-radius: 18px;
+             padding: 16px; margin-bottom: 28px; cursor: pointer; }
+  .proximo img { width: 74px; height: 92px; object-fit: cover; border-radius: 10px; background: #222; flex: none; }
+  .proximo .rot { color: var(--amarelo); font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .proximo h3 { margin: 4px 0 2px; font-size: 19px; letter-spacing: -.01em; }
+  .proximo p { margin: 0; color: #c9c7c0; font-size: 14px; }
+  .proximo .contagem { margin-left: auto; text-align: right; font-weight: 800; font-size: 22px; color: var(--amarelo); white-space: nowrap; }
+  .proximo .contagem small { display: block; color: #9d9a92; font-size: 12px; font-weight: 600; }
+
+  /* Filtros */
+  .filtros { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; align-items: center; }
+  .chip { border: 1.5px solid var(--linha); background: var(--cartao); border-radius: 999px; padding: 6px 13px;
+          font-weight: 700; font-size: 13px; cursor: pointer; color: var(--tinta-suave); }
+  .chip.ativo { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+  .filtros .sep { width: 1px; height: 22px; background: var(--linha); margin: 0 4px; }
+
+  /* Dias e cartões */
+  .dia { margin-bottom: 26px; }
+  .dia h2 { font-size: 15px; margin: 0 0 12px; display: flex; align-items: baseline; gap: 8px; letter-spacing: -.01em; }
+  .dia h2 small { color: var(--cinza); font-weight: 600; font-size: 13px; }
+  .dia h2 .hoje { background: var(--amarelo); padding: 1px 8px; border-radius: 6px; font-size: 12px; }
+  .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 14px; }
+  .cartao { background: var(--cartao); border: 1px solid var(--linha); border-radius: var(--raio); overflow: hidden;
+            cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; display: flex; flex-direction: column; text-align: left; padding: 0; }
+  .cartao:hover { transform: translateY(-2px); box-shadow: var(--sombra); }
+  .cartao.apagado { opacity: .55; }
+  .capa { position: relative; aspect-ratio: 4 / 5; background: var(--papel-2); overflow: hidden; }
+  .capa.story { aspect-ratio: 4 / 5; }
+  .capa img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .capa .hora { position: absolute; left: 10px; top: 10px; background: rgba(16,16,16,.85); color: #fff; font-weight: 800;
+                font-size: 13px; padding: 4px 9px; border-radius: 8px; }
+  .capa .qtd { position: absolute; right: 10px; top: 10px; background: rgba(255,255,255,.92); font-weight: 800;
+               font-size: 12px; padding: 4px 8px; border-radius: 8px; }
+  .corpo { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 9px; flex: 1; }
+  .linha1 { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-size: 11.5px; font-weight: 800; padding: 3px 8px; border-radius: 6px; background: var(--papel-2); color: var(--tinta-suave); letter-spacing: .01em; }
+  .tag.tipo { background: var(--tinta); color: #fff; }
+  .tag.pub { background: var(--aviso-fundo); color: #6b5600; }
+  .titulo { font-weight: 700; font-size: 14px; color: var(--tinta); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .redes { display: flex; gap: 6px; margin-top: auto; flex-wrap: wrap; }
+  .st { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+        background: var(--papel-2); color: var(--cinza); }
+  .st::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .st.ok { background: var(--ok-fundo); color: var(--ok); }
+  .st.agend { background: var(--azul-fundo); color: var(--azul); }
+  .st.ruim { background: var(--erro-fundo); color: var(--erro); }
+  .st.vai { background: var(--aviso-fundo); color: #8a6d00; }
+
+  .vazio { text-align: center; padding: 60px 20px; color: var(--cinza); border: 1.5px dashed var(--linha); border-radius: 18px; }
+  .vazio b { display: block; color: var(--tinta); font-size: 17px; margin-bottom: 4px; }
+
+  /* Pedidos */
+  .pedidos { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 22px; align-items: start; }
+  .painel { background: var(--cartao); border: 1px solid var(--linha); border-radius: 18px; padding: 22px; }
+  .painel h3 { margin: 0 0 4px; font-size: 18px; letter-spacing: -.01em; }
+  .painel > p { margin: 0 0 18px; color: var(--cinza); font-size: 14px; }
+  .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .pedido { border-top: 1px solid var(--linha); padding: 14px 0; }
+  .pedido:first-of-type { border-top: 0; padding-top: 0; }
+  .pedido .meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 6px; font-size: 12px; color: var(--cinza); font-weight: 600; }
+  .pedido p { margin: 0; white-space: pre-wrap; }
+  .pedido .resp { margin-top: 8px; background: var(--papel-2); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+
+  /* Detalhe */
+  .fundo { position: fixed; inset: 0; background: rgba(16,16,16,.55); z-index: 20; display: grid; place-items: center; padding: 16px; }
+  .detalhe { background: var(--papel); width: 100%; max-width: 980px; max-height: calc(100vh - 32px); overflow: auto;
+             border-radius: 22px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .det-img { background: #1b1b1a; padding: 18px; display: flex; flex-direction: column; gap: 12px; align-items: center; justify-content: center; }
+  .det-img img.grande { width: 100%; max-height: 70vh; object-fit: contain; border-radius: 10px; }
+  .miniaturas { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .miniaturas img { width: 46px; height: 58px; object-fit: cover; border-radius: 6px; cursor: pointer; opacity: .5; border: 2px solid transparent; }
+  .miniaturas img.ativa { opacity: 1; border-color: var(--amarelo); }
+  .det-info { padding: 24px; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .det-info h3 { margin: 0; font-size: 21px; letter-spacing: -.02em; }
+  .det-topo { display: flex; align-items: flex-start; gap: 10px; }
+  .fecha { margin-left: auto; border: 0; background: var(--papel-2); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 18px; flex: none; }
+  .bloco { background: var(--cartao); border: 1px solid var(--linha); border-radius: var(--raio); padding: 14px 16px; }
+  .bloco h4 { margin: 0 0 10px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--cinza); }
+  .legenda-txt { white-space: pre-wrap; font-size: 14px; max-height: 260px; overflow: auto; margin: 0; }
+  .rede-linha { display: flex; align-items: center; gap: 10px; padding: 6px 0; flex-wrap: wrap; }
+  .rede-linha b { width: 84px; }
+  .rede-linha a { font-weight: 700; font-size: 14px; }
+  .botoes { display: flex; gap: 8px; flex-wrap: wrap; }
+  .botoes .btn { padding: 9px 15px; font-size: 14px; }
+  .dica { font-size: 12.5px; color: var(--cinza); margin: 6px 0 0; }
+  .contador { font-size: 12px; color: var(--cinza); text-align: right; margin-top: 4px; }
+
+  .aviso-topo { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); background: var(--tinta); color: #fff;
+                padding: 12px 18px; border-radius: 12px; font-weight: 700; z-index: 40; box-shadow: var(--sombra); max-width: calc(100% - 32px); }
+  .aviso-topo.ruim { background: var(--erro); }
+  .carregando { text-align: center; padding: 70px 0; color: var(--cinza); font-weight: 600; }
+
+  .metr { display: flex; gap: 10px; font-size: 12.5px; color: var(--tinta-suave); font-weight: 600; flex-wrap: wrap; }
+  .metr b { color: var(--tinta); font-weight: 800; }
+  .tab-m { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .tab-m th, .tab-m td { padding: 7px 4px; border-bottom: 1px solid var(--linha); text-align: right; }
+  .tab-m th:first-child, .tab-m td:first-child { text-align: left; color: var(--tinta-suave); font-weight: 600; }
+  .tab-m th { font-size: 12px; color: var(--cinza); text-transform: uppercase; letter-spacing: .06em; }
+  .tab-m td { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .tab-m tr:last-child td { border-bottom: 0; }
+  .res-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 18px; }
+  .barra-linha { display: grid; grid-template-columns: minmax(110px, 160px) 1fr auto; gap: 10px; align-items: center; padding: 7px 0; font-size: 14px; }
+  .barra-linha .nome { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .barra-linha .nome small { display: block; color: var(--cinza); font-weight: 600; font-size: 12px; }
+  .trilho { height: 12px; background: var(--papel-2); border-radius: 6px; overflow: hidden; }
+  .trilho i { display: block; height: 100%; background: var(--amarelo); border-radius: 6px; min-width: 3px; }
+  .barra-linha .val { font-weight: 800; font-variant-numeric: tabular-nums; min-width: 64px; text-align: right; }
+  .top { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px solid var(--linha); cursor: pointer; }
+  .top:first-of-type { border-top: 0; }
+  .top img { width: 48px; height: 60px; object-fit: cover; border-radius: 8px; flex: none; background: var(--papel-2); }
+  .top .pos { font-weight: 800; font-size: 18px; width: 22px; color: var(--cinza); }
+  .top .txt { min-width: 0; flex: 1; }
+  .top .txt b { display: block; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .top .txt span { font-size: 12.5px; color: var(--cinza); font-weight: 600; }
+  .nota { font-size: 13px; color: var(--cinza); background: var(--papel-2); border-radius: 12px; padding: 12px 14px; margin-top: 18px; }
+  .seg { display: inline-flex; background: var(--papel-2); border-radius: 999px; padding: 3px; gap: 2px; }
+  .seg button { border: 0; background: none; padding: 6px 13px; border-radius: 999px; font-weight: 700; font-size: 13px; cursor: pointer; color: var(--cinza); }
+  .seg button.ativo { background: var(--cartao); color: var(--tinta); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+
+  @media (max-width: 860px) {
+    .res-grade { grid-template-columns: 1fr; }
+    .resumo { grid-template-columns: repeat(2, 1fr); }
+    .pedidos { grid-template-columns: 1fr; }
+    .detalhe { grid-template-columns: 1fr; }
+    .det-img img.grande { max-height: 52vh; }
+  }
+  @media (max-width: 520px) {
+    .grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .corpo { padding: 10px; }
+    .titulo { font-size: 13px; }
+    .proximo .contagem { display: none; }
+    .duas { grid-template-columns: 1fr; }
+    .marca small { display: none; }
+  }
+
+
+  /* ===== Visual 2.0 (19/11): estrutura mais clara e botões em destaque ===== */
+  body { font-size: 15.5px; }
+  .topo { background: var(--tinta); border-bottom: 0; backdrop-filter: none; color: #fff; }
+  .topo .marca small { color: #a9a69c; }
+  .topo .btn-claro { color: #fff; border-color: #3a3a36; }
+  .topo .btn-claro:hover { border-color: #fff; }
+  .topo .btn-novo { box-shadow: 0 0 0 3px rgba(255,212,0,.18); }
+  .topo .btn-novo svg { width: 18px; height: 18px; }
+  .faixa-abas { background: var(--papel); border-bottom: 1px solid var(--linha); }
+  .abas { padding: 10px 16px; gap: 6px; }
+  .aba { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid transparent; border-radius: 999px;
+         padding: 8px 16px; color: var(--tinta-suave); transition: background .15s ease, border-color .15s ease; }
+  .aba svg { width: 18px; height: 18px; flex: none; }
+  .aba:hover { background: var(--papel-2); }
+  .aba.ativa { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+  .aba.ativa .cont { background: var(--amarelo); color: var(--tinta); }
+  .aba .cont { margin-left: 0; }
+  .aba.ia-aba { color: var(--tinta); border-color: var(--amarelo); }
+  .aba.ia-aba.ativa { background: var(--amarelo); border-color: var(--amarelo); color: var(--tinta); }
+
+  .cab { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin: 4px 0 20px; }
+  .cab h2 { margin: 0; font-size: 26px; letter-spacing: -.025em; line-height: 1.15; }
+  .cab p { margin: 4px 0 0; color: var(--cinza); font-size: 15px; max-width: 620px; }
+  .cab .botoes .btn { padding: 11px 18px; }
+
+  .btn { font-weight: 800; }
+  .btn-amarelo { box-shadow: 0 2px 0 rgba(16,16,16,.12); }
+  .btn-grande { padding: 15px 22px; font-size: 16px; }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+
+  .numero { display: flex; flex-direction: column; gap: 2px; position: relative; }
+  .numero .ico { position: absolute; right: 14px; top: 14px; width: 22px; height: 22px; color: var(--cinza); opacity: .7; }
+  .numero.destaque .ico { color: var(--tinta); }
+
+  /* ----- Criar com IA ----- */
+  .ia { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 22px; align-items: start; }
+  .ia-faixa { display: flex; gap: 12px; align-items: flex-start; background: var(--aviso-fundo); border: 1px solid #f1e08a;
+              border-radius: var(--raio); padding: 14px 16px; margin-bottom: 18px; }
+  .ia-faixa svg { width: 22px; height: 22px; flex: none; color: #8a6d00; margin-top: 1px; }
+  .ia-faixa strong { display: block; margin-bottom: 2px; }
+  .ia-faixa p { margin: 0; color: var(--tinta-suave); font-size: 14px; }
+  .etapa { background: var(--cartao); border: 1px solid var(--linha); border-radius: 18px; padding: 20px 22px; margin-bottom: 14px; }
+  .etapa > header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .etapa .n { width: 30px; height: 30px; border-radius: 50%; background: var(--tinta); color: var(--amarelo); display: grid; place-items: center;
+              font-weight: 800; font-size: 14px; flex: none; }
+  .etapa h3 { margin: 0; font-size: 17px; letter-spacing: -.01em; }
+  .etapa header small { display: block; color: var(--cinza); font-weight: 600; font-size: 13px; }
+  .campo-g { margin-top: 14px; }
+  .campo-g:first-of-type { margin-top: 0; }
+  .ajuda { font-size: 13px; color: var(--cinza); margin: 6px 0 0; }
+  .opcoes { display: flex; flex-wrap: wrap; gap: 8px; }
+  .op { position: relative; }
+  .op input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .op span { display: inline-flex; align-items: center; gap: 6px; min-height: 42px; padding: 8px 14px; border-radius: 12px;
+             border: 1.5px solid var(--linha); background: var(--cartao); font-weight: 700; font-size: 14px; color: var(--tinta-suave);
+             cursor: pointer; transition: border-color .15s ease, background .15s ease; }
+  .op:hover span { border-color: #c9c5bb; }
+  .op input:checked + span { background: var(--tinta); border-color: var(--tinta); color: #fff; }
+  .op input:focus-visible + span { outline: 3px solid var(--azul); outline-offset: 2px; }
+  .op.cor span::before { content: ""; width: 16px; height: 16px; border-radius: 5px; background: var(--c); border: 1px solid rgba(0,0,0,.15); }
+  .grade2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .regras { background: var(--papel-2); border-radius: 12px; padding: 12px 14px; margin-top: 12px; font-size: 13.5px; }
+  .regras b { display: block; margin-bottom: 4px; }
+  .regras ul { margin: 0; padding-left: 18px; color: var(--tinta-suave); }
+  .regras li { margin: 2px 0; }
+  .lado { position: sticky; top: 150px; display: flex; flex-direction: column; gap: 14px; }
+  .resumo-ia { background: var(--tinta); color: #fff; border-radius: 18px; padding: 20px; }
+  .resumo-ia h3 { margin: 0 0 12px; font-size: 16px; }
+  .resumo-ia dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: 14px; }
+  .resumo-ia dt { color: #a9a69c; font-weight: 600; }
+  .resumo-ia dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
+  .resumo-ia .acoes-ia { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+  .resumo-ia .btn-claro { color: #fff; border-color: #3a3a36; }
+  .resumo-ia .btn-claro:hover { border-color: #fff; }
+  .resumo-ia .selo-breve { font-size: 11px; font-weight: 800; background: #3a3a36; color: var(--amarelo); padding: 2px 7px; border-radius: 6px; letter-spacing: .04em; }
+  .resumo-ia .msg { margin-top: 10px; }
+  .resumo-ia .msg.boa { color: #7ee2b8; } .resumo-ia .msg.ruim { color: #ff9b8f; }
+  .tam { font-size: 12px; color: #a9a69c; text-align: right; margin-top: 6px; }
+  .ia-chat { background: var(--cartao); border: 1px solid var(--linha); border-radius: 18px; display: flex; flex-direction: column; }
+  .ia-chat > header { padding: 14px 16px; border-bottom: 1px solid var(--linha); font-weight: 800; display: flex; align-items: center; gap: 8px; }
+  .ia-msgs { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; min-height: 120px; }
+  .ia-bolha { max-width: 92%; padding: 10px 13px; border-radius: 14px; font-size: 14px; line-height: 1.45; white-space: pre-wrap;
+              background: var(--papel-2); border-bottom-left-radius: 4px; }
+  .ia-entrada { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--linha); }
+  .ia-entrada textarea { flex: 1; resize: none; min-height: 46px; max-height: 120px; }
+  .ia-entrada textarea:disabled { background: var(--papel-2); cursor: not-allowed; }
+  .some { display: none; }
+  .op.gem input:checked + span { background: var(--amarelo); border-color: var(--amarelo); color: var(--tinta); }
+  .ia-chat > header svg { width: 18px; height: 18px; flex: none; }
+  .grade2 > .campo-g { margin-top: 0; }
+  .etapa .grade2 { margin-top: 14px; }
+  .etapa .grade2:first-of-type { margin-top: 0; }
+
+  @media (max-width: 980px) { .ia { grid-template-columns: 1fr; } .lado { position: static; } }
+  @media (max-width: 520px) {
+    .grade2 { grid-template-columns: 1fr; }
+    .etapa { padding: 16px; }
+    .cab h2 { font-size: 22px; }
+    .topo .btn-novo .txt-l { display: none; }
+    .topo #btnAtualizar .txt-l { display: none; }
+  }
+
+
+  /* ----- Aprovação de pedidos ----- */
+  .aprovar-lista { display: flex; flex-direction: column; gap: 16px; margin-bottom: 26px; }
+  .aprovar-lista > h3 { margin: 0; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+  .apv { background: var(--cartao); border: 2px solid var(--amarelo); border-radius: 18px; padding: 18px; display: grid;
+         grid-template-columns: 260px minmax(0, 1fr); gap: 20px; box-shadow: var(--sombra); }
+  .apv-imgs { display: flex; gap: 8px; overflow-x: auto; }
+  .apv-imgs img { width: 100%; max-width: 260px; border-radius: 12px; display: block; background: var(--papel-2); cursor: zoom-in; }
+  .apv-imgs.varias img { width: 200px; flex: none; }
+  .apv-info { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+  .apv-info .pedido-txt { font-size: 13.5px; color: var(--tinta-suave); background: var(--papel-2); border-radius: 10px; padding: 10px 12px;
+                          white-space: pre-wrap; max-height: 120px; overflow: auto; }
+  .apv-info .resp { background: var(--ok-fundo); color: #0b5e40; border-radius: 10px; padding: 10px 12px; font-size: 14px; font-weight: 600; }
+  .apv-acoes { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .btn-ok { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .btn-ok:hover { background: #0b8a5c; border-color: #0b8a5c; }
+  .apv .atrasado { background: var(--erro-fundo); color: var(--erro); border-radius: 10px; padding: 10px 12px; font-size: 14px; font-weight: 700; }
+  .apv-ajuste { display: flex; flex-direction: column; gap: 8px; }
+  .apv-ajuste textarea { min-height: 90px; }
+  .apv details summary { cursor: pointer; font-weight: 700; font-size: 14px; }
+  .apv details p { white-space: pre-wrap; font-size: 14px; margin: 8px 0 0; }
+  .st.apr { background: var(--aviso-fundo); color: #8a6d00; }
+  @media (max-width: 700px) { .apv { grid-template-columns: 1fr; } .apv-imgs img { max-width: none; } }
+
+  /* Passada de UX (19/11): zoom do iPhone, foco por teclado, alvo de toque, abas no celular, menos movimento */
+  .campo { font-size: 16px; }
+  .login { min-height: 100dvh; }
+  :where(button, a, select, input, textarea, .cartao):focus-visible { outline: 3px solid var(--azul); outline-offset: 2px; }
+  .campo:focus-visible { outline: none; border-color: var(--tinta); box-shadow: 0 0 0 3px rgba(36,86,214,.25); }
+  .aba { min-height: 44px; touch-action: manipulation; }
+  .seg button, .filtros button, .ia-sugest button { min-height: 40px; touch-action: manipulation; }
+  .abas { scrollbar-width: none; scroll-behavior: smooth; }
+  .abas::-webkit-scrollbar { display: none; }
+  @media (max-width: 640px) {
+    .abas { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+    .abas.no-fim { -webkit-mask-image: none; mask-image: none; }
+  }
+  .ia-entrada textarea:disabled { background: var(--papel-2); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
+    .btn:hover, .cartao:hover { transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<section class="login" id="telaLogin">
+  <form class="login-caixa" id="formLogin">
+    <div class="marca"><span class="selo">F</span><div>Facilite Crédito<small>Painel de conteúdo</small></div></div>
+    <h1>Entrar no painel</h1>
+    <p>Agenda, histórico e pedidos de posts do Instagram e do Facebook.</p>
+    <label for="senha">Senha</label>
+    <input class="campo" id="senha" type="password" autocomplete="current-password" required>
+    <button class="btn btn-amarelo btn-cheio btn-grande" type="submit">Entrar</button>
+    <div class="msg ruim" id="msgLogin"></div>
+  </form>
+</section>
+
+<div id="app" class="esconde">
+  <header class="topo">
+    <div class="topo-in">
+      <div class="marca"><span class="selo">F</span><div>Facilite Crédito<small>Painel de conteúdo</small></div></div>
+      <div class="acoes">
+        <button class="btn btn-claro" id="btnAtualizar" type="button" aria-label="Atualizar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg><span class="txt-l">Atualizar</span></button>
+        <button class="btn btn-claro" id="btnSair" type="button">Sair</button>
+        <button class="btn btn-amarelo btn-novo" id="btnNovo" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span class="txt-l">Criar post</span></button>
+      </div>
+    </div>
+  </header>
+  <div class="faixa-abas topo-abas">
+    <nav class="abas" id="abas" role="tablist" aria-label="Seções do painel">
+      <button class="aba ativa" data-aba="agenda" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Agenda<span class="cont" id="cAgenda">0</span></button>
+      <button class="aba" data-aba="historico" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>Publicados<span class="cont" id="cHist">0</span></button>
+      <button class="aba" data-aba="resultados" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M8 17v-5M13 17V8M18 17v-8"/></svg>Resultados</button>
+      <button class="aba" data-aba="pedidos" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>Pedidos<span class="cont" id="cPed">0</span></button>
+      <button class="aba ia-aba" data-aba="ia" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Criar com IA</button>
+    </nav>
+  </div>
+
+  <main>
+    <div class="carregando" id="carregando">Carregando...</div>
+
+    <section id="vAgenda" class="esconde">
+      <div class="cab"><div><h2>Agenda</h2><p>O que vai sair nos próximos dias. Toque num post para ver, mudar o horário, editar a legenda ou cancelar.</p></div></div>
+      <div class="resumo" id="resumo"></div>
+      <div id="proximo"></div>
+      <div class="filtros" id="filtrosAgenda"></div>
+      <div id="listaAgenda"></div>
+    </section>
+
+    <section id="vHistorico" class="esconde">
+      <div class="cab"><div><h2>Publicados</h2><p>Tudo o que já saiu no Instagram e no Facebook, do mais recente para o mais antigo.</p></div></div>
+      <div class="filtros" id="filtrosHist"></div>
+      <div id="listaHist"></div>
+    </section>
+
+    <section id="vResultados" class="esconde"><div class="cab"><div><h2>Resultados</h2><p>Quantas pessoas viram e interagiram, somando Instagram e Facebook.</p></div></div><div id="resultados"></div></section>
+
+    <section id="vPedidos" class="esconde">
+      <div class="cab"><div><h2>Pedidos</h2><p>Um pedido rápido, em poucas palavras. Para detalhar tudo (público, foto, fundo, legenda, hashtags), use "Criar com IA".</p></div><div class="botoes"><button class="btn btn-amarelo" type="button" data-ir="ia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Briefing completo</button></div></div>
+      <div id="paraAprovar"></div>
+      <div class="pedidos">
+        <form class="painel" id="formPedido">
+          <h3>Pedido rápido</h3>
+          <p>Escreva a ideia do jeito que vier. O pedido entra na fila e é produzido na próxima rodada de artes.</p>
+          <label for="pTexto">O que você quer?</label>
+          <textarea class="campo" id="pTexto" required maxlength="1500" placeholder="Ex.: panfleto para aposentado do INSS falando de portabilidade, saindo na sexta de manhã"></textarea>
+          <div class="duas">
+            <div>
+              <label for="pPublico">Público</label>
+              <select class="campo" id="pPublico">
+                <option>Geral</option><option>INSS</option><option>CLT</option><option>Governo da Bahia</option><option>SIAPE</option>
+              </select>
+            </div>
+            <div>
+              <label for="pFormato">Formato</label>
+              <select class="campo" id="pFormato">
+                <option>Tanto faz</option><option>Panfleto</option><option>Post educativo</option><option>Carrossel</option><option>Story</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:12px"><label class="op gem"><input type="checkbox" id="pGemini"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>Usar Gemini (foto ao fundo)</span></label><p class="dica" style="margin:6px 0 0">Marque só se quiser foto ao fundo. Sem marcar, a arte sai só com texto e não gasta Gemini.</p></div>
+          <div class="duas">
+            <div>
+              <label for="pQuando">Dia (opcional)</label>
+              <input class="campo" id="pQuando" type="date">
+            </div>
+            <div>
+              <label for="pHora">Hora (opcional)</label>
+              <input class="campo" id="pHora" type="time" step="300">
+            </div>
+          </div>
+          <p class="dica" style="margin:6px 0 0">Horário da Bahia. Sem hora, a gente escolhe o melhor horário do dia.</p>
+          <button class="btn btn-amarelo btn-cheio btn-grande" type="submit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>Enviar pedido</button>
+          <div class="msg" id="msgPedido"></div>
+        </form>
+        <div class="painel">
+          <h3>Pedidos</h3>
+          <p>Acompanhe o que já foi pedido.</p>
+          <div id="listaPedidos"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="vIa" class="esconde">
+      <div class="cab"><div><h2>Criar com IA</h2><p>Preencha o briefing do post. Quanto mais detalhe, mais certeira fica a arte. Só o assunto é obrigatório.</p></div></div>
+      <div class="ia-faixa" id="iaFaixa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg><div><strong>A geração automática ainda não está ligada</strong>
+        <p>Você já pode montar o briefing e tocar em <b>Enviar como pedido</b>. Ele entra na fila e é produzido na próxima rodada de artes.</p></div></div>
+      <div class="ia">
+        <form id="iaForm" novalidate>
+          <div class="etapa"><header><span class="n">1</span><div><h3>Sobre o que é o post?</h3><small>Assunto e produto</small></div></header>
+            <div class="campo-g"><label for="iaAssunto">Assunto ou ideia *</label>
+              <textarea class="campo" id="iaAssunto" maxlength="400" style="min-height:96px" placeholder="Ex.: reajuste do INSS em janeiro, convidando o aposentado a conferir se sobra margem para portabilidade"></textarea></div>
+            <div class="campo-g"><label>Produto (nicho)</label>
+              <div class="opcoes" role="group"><label class="op "><input type="radio" name="produto" value="Consignado novo" checked><span>Consignado novo</span></label><label class="op "><input type="radio" name="produto" value="Portabilidade"><span>Portabilidade</span></label><label class="op "><input type="radio" name="produto" value="Refinanciamento"><span>Refinanciamento</span></label><label class="op "><input type="radio" name="produto" value="Cartão consignado"><span>Cartão consignado</span></label><label class="op "><input type="radio" name="produto" value="Cartão benefício"><span>Cartão benefício</span></label><label class="op "><input type="radio" name="produto" value="Antecipação do FGTS"><span>Antecipação do FGTS</span></label><label class="op "><input type="radio" name="produto" value="Crédito pessoal"><span>Crédito pessoal</span></label><label class="op "><input type="radio" name="produto" value="Institucional"><span>Institucional</span></label></div></div>
+          </div>
+
+          <div class="etapa"><header><span class="n">2</span><div><h3>Para quem?</h3><small>Público e tom de voz</small></div></header>
+            <div class="campo-g"><label>Público</label>
+              <div class="opcoes" role="group"><label class="op "><input type="radio" name="publico" value="INSS (aposentados e pensionistas)" checked><span>INSS (aposentados e pensionistas)</span></label><label class="op "><input type="radio" name="publico" value="Servidor do Governo da Bahia"><span>Servidor do Governo da Bahia</span></label><label class="op "><input type="radio" name="publico" value="Servidor municipal"><span>Servidor municipal</span></label><label class="op "><input type="radio" name="publico" value="SIAPE (federal)"><span>SIAPE (federal)</span></label><label class="op "><input type="radio" name="publico" value="Forças Armadas"><span>Forças Armadas</span></label><label class="op "><input type="radio" name="publico" value="CLT (carteira assinada)"><span>CLT (carteira assinada)</span></label><label class="op "><input type="radio" name="publico" value="Geral"><span>Geral</span></label></div></div>
+            <div class="campo-g"><label>Tom</label>
+              <div class="opcoes" role="group"><label class="op "><input type="radio" name="tom" value="Acolhedor" checked><span>Acolhedor</span></label><label class="op "><input type="radio" name="tom" value="Direto"><span>Direto</span></label><label class="op "><input type="radio" name="tom" value="Educativo"><span>Educativo</span></label><label class="op "><input type="radio" name="tom" value="Urgente (data limite)"><span>Urgente (data limite)</span></label><label class="op "><input type="radio" name="tom" value="Comemorativo"><span>Comemorativo</span></label></div></div>
+          </div>
+
+          <div class="etapa"><header><span class="n">3</span><div><h3>Formato e visual</h3><small>Como a arte vai ficar</small></div></header>
+            <div class="campo-g"><label>Formato</label>
+              <div class="opcoes" role="group"><label class="op "><input type="radio" name="formato" value="Post" checked><span>Post (feed)</span></label><label class="op "><input type="radio" name="formato" value="Carrossel"><span>Carrossel</span></label><label class="op "><input type="radio" name="formato" value="Story"><span>Story</span></label></div></div>
+            <div class="campo-g some" id="grpSlides"><label for="iaSlides">Quantos cartões no carrossel?</label>
+              <select class="campo" id="iaSlides" style="max-width:160px"><option>3</option><option selected>5</option><option>7</option></select></div>
+            <div class="campo-g"><label>Imagem</label>
+              <div class="opcoes" role="group"><label class="op gem"><input type="radio" name="imagem" value="Com foto"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>Usar Gemini (foto ao fundo)</span></label><label class="op "><input type="radio" name="imagem" value="So texto" checked><span>Só texto (sem Gemini)</span></label></div>
+              <p class="ajuda">O Gemini só é chamado com esta opção marcada (custa de R$ 0,25 a R$ 0,40 por foto). A foto é ilustrativa, nunca apresentada como cliente real.</p></div>
+            <div class="campo-g" id="grpCena"><label for="iaCena">Como é a foto?</label>
+              <textarea class="campo" id="iaCena" maxlength="300" style="min-height:84px" placeholder="Uma cena só. Ex.: casal de aposentados, uns 70 anos, sorrindo na varanda de casa em Jequié, fim de tarde"></textarea>
+              <p class="ajuda">Diga quem aparece, o que está fazendo, onde e a luz. Quanto mais específico, melhor.</p></div>
+            <div class="campo-g" id="grpFundo"><label>Cor de fundo</label>
+              <div class="opcoes" role="group"><label class="op cor" style="--c:#0a2a5e"><input type="radio" name="fundo" value="Azul marinho" checked><span>Azul marinho</span></label><label class="op cor" style="--c:#f47b20"><input type="radio" name="fundo" value="Laranja"><span>Laranja</span></label><label class="op cor" style="--c:#ffffff"><input type="radio" name="fundo" value="Branco"><span>Branco</span></label><label class="op cor" style="--c:linear-gradient(135deg,#0a2a5e 50%,#f47b20 50%)"><input type="radio" name="fundo" value="IA escolhe"><span>A IA escolhe</span></label></div></div>
+          </div>
+
+          <div class="etapa"><header><span class="n">4</span><div><h3>Texto da arte</h3><small>Pouco texto funciona melhor</small></div></header>
+            <div class="grade2">
+              <div class="campo-g"><label for="iaTitulo">Título (opcional)</label>
+                <input class="campo" id="iaTitulo" maxlength="45" placeholder="Ex.: Seu benefício aumentou"></div>
+              <div class="campo-g"><label for="iaDestaque">Frase em destaque (opcional)</label>
+                <input class="campo" id="iaDestaque" maxlength="45" placeholder="Ex.: Veja se sobrou margem"></div>
+            </div>
+            <div class="campo-g"><label for="iaCta">Chamada final</label>
+              <input class="campo" id="iaCta" maxlength="45" placeholder="Ex.: Fale com a gente no WhatsApp">
+              <p class="ajuda">Sai como texto na arte. Botão de WhatsApp não entra nas artes.</p></div>
+          </div>
+
+          <div class="etapa"><header><span class="n">5</span><div><h3>Legenda e hashtags</h3><small>O texto que vai embaixo do post</small></div></header>
+            <div class="campo-g"><label>Legenda</label>
+              <div class="opcoes" role="group"><label class="op "><input type="radio" name="legenda" value="IA escreve" checked><span>A IA escreve</span></label><label class="op "><input type="radio" name="legenda" value="Eu escrevo"><span>Eu escrevo</span></label></div></div>
+            <div class="campo-g some" id="grpLegTexto"><label for="iaLegTexto">Sua legenda</label>
+              <textarea class="campo" id="iaLegTexto" maxlength="600" style="min-height:110px"></textarea></div>
+            <div class="campo-g" id="grpLegTam"><label>Tamanho</label>
+              <div class="opcoes" role="group"><label class="op "><input type="radio" name="tamanho" value="Curta"><span>Curta</span></label><label class="op "><input type="radio" name="tamanho" value="Média" checked><span>Média</span></label><label class="op "><input type="radio" name="tamanho" value="Longa"><span>Longa</span></label></div></div>
+            <div class="campo-g"><label>Emojis</label>
+              <div class="opcoes" role="group"><label class="op "><input type="radio" name="emojis" value="Poucos" checked><span>Poucos</span></label><label class="op "><input type="radio" name="emojis" value="Nenhum"><span>Nenhum</span></label><label class="op "><input type="radio" name="emojis" value="Vários"><span>Vários</span></label></div></div>
+            <div class="campo-g"><label>Hashtags</label>
+              <div class="opcoes" role="group"><label class="op "><input type="radio" name="hashtags" value="IA escolhe" checked><span>A IA escolhe</span></label><label class="op "><input type="radio" name="hashtags" value="As minhas"><span>As minhas</span></label><label class="op "><input type="radio" name="hashtags" value="Sem hashtags"><span>Sem hashtags</span></label></div></div>
+            <div class="campo-g some" id="grpTags"><label for="iaTags">Suas hashtags</label>
+              <input class="campo" id="iaTags" maxlength="200" placeholder="#consignado #inss #jequie"></div>
+          </div>
+
+          <div class="etapa"><header><span class="n">6</span><div><h3>O que pode e o que não pode</h3><small>Limites deste post</small></div></header>
+            <div class="grade2">
+              <div class="campo-g"><label for="iaPode">Precisa aparecer ou pode dizer</label>
+                <textarea class="campo" id="iaPode" maxlength="250" style="min-height:96px" placeholder="Ex.: mencionar atendimento presencial no centro de Jequié"></textarea></div>
+              <div class="campo-g"><label for="iaNaoPode">Não pode aparecer</label>
+                <textarea class="campo" id="iaNaoPode" maxlength="250" style="min-height:96px" placeholder="Ex.: não citar nome de banco, sem foto de jovem"></textarea></div>
+            </div>
+            <div class="regras"><b>Regras que valem sempre (não precisa escrever)</b><ul>
+              <li>Sem promessa de aprovação garantida: crédito sempre sujeito a análise.</li>
+              <li>Sem taxa ou valor em número na arte.</li>
+              <li>Sem botão de WhatsApp na imagem.</li>
+              <li>Sem logo da Facilite na imagem.</li>
+              <li>Legenda começa com @facilitecredito.</li>
+              <li>Pessoas das fotos são ilustrativas, nunca apresentadas como clientes.</li></ul></div>
+          </div>
+
+          <div class="etapa"><header><span class="n">7</span><div><h3>Quando publicar?</h3><small>Instagram e, logo depois, Facebook</small></div></header>
+            <div class="campo-g"><div class="opcoes" role="group"><label class="op "><input type="radio" name="quando" value="Melhor horario" checked><span>Melhor horário da semana</span></label><label class="op "><input type="radio" name="quando" value="Escolher"><span>Escolher data e hora</span></label></div></div>
+            <div class="campo-g some" id="grpData"><label for="iaData">Data e hora (horário da Bahia)</label>
+              <input class="campo" id="iaData" type="datetime-local" style="max-width:280px"></div>
+          </div>
+        </form>
+
+        <aside class="lado">
+          <div class="resumo-ia">
+            <h3>Resumo do pedido</h3>
+            <dl id="iaResumo"></dl>
+            <div class="tam" id="iaTam"></div>
+            <div class="acoes-ia">
+              <button class="btn btn-amarelo btn-grande" type="button" id="iaGerar" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Gerar prévia com IA <span class="selo-breve">EM BREVE</span></button>
+              <button class="btn btn-claro btn-grande" type="button" id="iaPedir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>Enviar como pedido</button>
+              <button class="btn btn-claro" type="button" id="iaLimpar">Limpar tudo</button>
+            </div>
+            <div class="msg" id="iaMsg" role="status" aria-live="polite"></div>
+          </div>
+          <div class="ia-chat">
+            <header><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Ajustar com a IA</header>
+            <div class="ia-msgs" id="iaMsgs"><div class="ia-bolha">Depois que a prévia aparecer, peça ajustes aqui. Ex.: "deixa o título mais curto" ou "troca a foto por uma de praia".</div></div>
+            <form class="ia-entrada" id="iaChat">
+              <textarea class="campo" id="iaTexto" maxlength="800" placeholder="Disponível em breve" aria-label="Mensagem para a IA" disabled></textarea>
+              <button class="btn btn-amarelo" type="submit" id="iaEnviar" disabled>Enviar</button>
+            </form>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="fundo esconde" id="fundo"><div class="detalhe" id="detalhe" role="dialog" aria-modal="true"></div></div>
+<div class="aviso-topo esconde" id="aviso"></div>
+
+<script>
+(() => {
+  const API = 'https://n8n-n8n.siulxd.easypanel.host/webhook/facilite-painel';
+  const FUSO = 'America/Bahia';
+  const $ = s => document.querySelector(s);
+  const guarda = {
+    ler(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    por(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+    tirar(k) { try { localStorage.removeItem(k); } catch (e) {} },
+  };
+  let senha = guarda.ler('facilite_painel_senha') || '';
+  let dados = { agenda: [], pedidos: [] };
+  let aba = 'agenda';
+  const filtro = { agenda: { tipo: 'todos', publico: 'todos' }, historico: { tipo: 'todos', publico: 'todos' } };
+
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const TIPOS = { feed: 'Post', carrossel: 'Carrossel', story: 'Story' };
+
+  function publico(p) {
+    const t = ((p.formato || '') + ' ' + (p.legenda || '')).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    if (/siape|servidor(es)? federa/.test(t)) return 'SIAPE';
+    if (/governo da bahia|servidor(es|a)? (publico )?estadua|servidor(es)? do estado/.test(t)) return 'Governo da Bahia';
+    if (/\bclt\b|carteira assinada/.test(t)) return 'CLT';
+    if (/\binss\b|aposentad|pensionista/.test(t)) return 'INSS';
+    return 'Geral';
+  }
+  function titulo(p) {
+    const l = (p.legenda || '').split('\n').map(x => x.trim()).find(x => x && !x.startsWith('#')) || p.formato || '';
+    return l.length > 110 ? l.slice(0, 108) + '...' : l;
+  }
+  const dt = iso => new Date(iso);
+  const fmt = (iso, o) => new Intl.DateTimeFormat('pt-BR', { timeZone: FUSO, ...o }).format(dt(iso));
+  const hora = iso => fmt(iso, { hour: '2-digit', minute: '2-digit' });
+  const chaveDia = iso => fmt(iso, { year: 'numeric', month: '2-digit', day: '2-digit' });
+  const nomeDia = iso => fmt(iso, { weekday: 'long' });
+  const dataCurta = iso => fmt(iso, { day: '2-digit', month: 'long' });
+  function paraCampo(iso) { // AAAA-MM-DDTHH:MM no horário da Bahia
+    const p = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: FUSO, year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(dt(iso)).map(x => [x.type, x.value]));
+    return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}`;
+  }
+
+  const num = v => new Intl.NumberFormat('pt-BR').format(Math.round(v || 0));
+  function soma(p) { // IG + FB somados
+    const m = p.metricas || {}; const o = { alcance: 0, views: 0, interacoes: 0, salvos: 0, compart: 0, curtidas: 0, comentarios: 0, respostas: 0, tem: false };
+    for (const r of ['ig', 'fb']) if (m[r]) { o.tem = true; for (const k in o) if (k !== 'tem') o[k] += Number(m[r][k] || 0); }
+    return o;
+  }
+  const taxa = o => o.alcance ? (100 * o.interacoes / o.alcance) : 0;
+  const pct = v => v.toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + '%';
+  function stIG(p) {
+    return { agendado: ['agend', 'Agendado'], aguardando: ['apr', 'Aguarda aprovação'], publicando: ['vai', 'Publicando'], publicado: ['ok', 'Publicado'],
+             falhou: ['ruim', 'Falhou'], cancelado: ['', 'Cancelado'] }[p.status] || ['', p.status || '?'];
+  }
+  function stFB(p) {
+    if (p.fb && p.fb.status === 'publicado') return ['ok', 'Publicado'];
+    if (p.fb && p.fb.status === 'publicando') return ['vai', 'Publicando'];
+    if (p.status === 'cancelado') return ['', 'Cancelado'];
+    if (p.status === 'aguardando') return ['apr', 'Aguarda aprovação'];
+    if (p.status === 'falhou') return ['ruim', 'Não saiu'];
+    if (p.status === 'publicado') return Date.now() - dt(p.quando) > 6 * 3600e3 ? ['', 'Antes do Facebook'] : ['vai', 'Na fila'];
+    return ['agend', 'Agendado'];
+  }
+  const selo = ([c, t], rede) => `<span class="st ${c}" title="${rede}">${rede === 'Instagram' ? 'IG' : 'FB'} · ${esc(t)}</span>`;
+
+  async function chamar(corpo) {
+    const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Painel-Senha': senha }, body: JSON.stringify(corpo) });
+    if (r.status === 403 || r.status === 401) { const e = new Error('senha'); e.senha = true; throw e; }
+    let j = {}; try { j = await r.json(); } catch (e) {}
+    if (!r.ok || j.ok === false) throw new Error(j.erro || 'Não foi possível concluir. Tente de novo.');
+    return j;
+  }
+
+  function aviso(txt, ruim) {
+    const a = $('#aviso'); a.textContent = txt; a.className = 'aviso-topo' + (ruim ? ' ruim' : '');
+    clearTimeout(aviso.t); aviso.t = setTimeout(() => a.classList.add('esconde'), 3800);
+  }
+
+  async function carregar(silencioso) {
+    if (!silencioso) $('#carregando').classList.remove('esconde');
+    try {
+      dados = await chamar({ acao: 'listar' });
+      dados.agenda.sort((a, b) => dt(a.quando) - dt(b.quando));
+      $('#telaLogin').classList.add('esconde'); $('#app').classList.remove('esconde');
+      desenhar();
+    } catch (e) {
+      if (e.senha) { sair('Senha incorreta.'); return; }
+      aviso(e.message === 'Failed to fetch' ? 'Sem conexão com o servidor. Tente de novo.' : e.message, true);
+    } finally { $('#carregando').classList.add('esconde'); }
+  }
+
+  function sair(msg) {
+    senha = ''; guarda.tirar('facilite_painel_senha');
+    $('#app').classList.add('esconde'); $('#telaLogin').classList.remove('esconde');
+    $('#msgLogin').textContent = msg || ''; $('#senha').value = ''; $('#senha').focus();
+  }
+
+  const futuros = () => dados.agenda.filter(p => ['agendado', 'aguardando', 'publicando', 'cancelado'].includes(p.status) || (p.status === 'falhou' && dt(p.quando) > Date.now() - 864e5));
+  const passados = () => dados.agenda.filter(p => ['publicado', 'falhou'].includes(p.status)).reverse();
+
+  function filtrar(lista, f) {
+    return lista.filter(p => (f.tipo === 'todos' || p.tipo === f.tipo) && (f.publico === 'todos' || publico(p) === f.publico));
+  }
+
+  function chipsFiltro(alvo, chave) {
+    const f = filtro[chave];
+    const tipos = [['todos', 'Tudo'], ['feed', 'Posts'], ['carrossel', 'Carrosséis'], ['story', 'Stories']];
+    const pubs = ['todos', 'INSS', 'CLT', 'Governo da Bahia', 'SIAPE', 'Geral'];
+    $(alvo).innerHTML = tipos.map(([v, t]) => `<button type="button" class="chip ${f.tipo === v ? 'ativo' : ''}" data-f="tipo" data-v="${v}">${t}</button>`).join('')
+      + '<span class="sep"></span>'
+      + pubs.map(v => `<button type="button" class="chip ${f.publico === v ? 'ativo' : ''}" data-f="publico" data-v="${esc(v)}">${v === 'todos' ? 'Todos os públicos' : esc(v)}</button>`).join('');
+    $(alvo).onclick = ev => {
+      const b = ev.target.closest('.chip'); if (!b) return;
+      f[b.dataset.f] = b.dataset.v; desenhar();
+    };
+  }
+
+  function cartao(p) {
+    const img = (p.urls || [])[0] || '';
+    return `<button type="button" class="cartao ${p.status === 'cancelado' ? 'apagado' : ''}" data-id="${p.id}">
+      <div class="capa ${p.tipo === 'story' ? 'story' : ''}">
+        ${img ? `<img loading="lazy" src="${esc(img)}" alt="">` : ''}
+        <span class="hora">${hora(p.quando)}</span>
+        ${(p.urls || []).length > 1 ? `<span class="qtd">1/${p.urls.length}</span>` : ''}
+      </div>
+      <div class="corpo">
+        <div class="linha1"><span class="tag tipo">${TIPOS[p.tipo] || esc(p.tipo)}</span><span class="tag">${esc(p.formato || '')}</span><span class="tag pub">${esc(publico(p))}</span></div>
+        <div class="titulo">${esc(titulo(p))}</div>
+        ${(() => { const o = soma(p); return o.tem ? `<div class="metr"><span><b>${num(o.alcance)}</b> alcançados</span><span><b>${num(o.interacoes)}</b> interações</span></div>` : ''; })()}
+        <div class="redes">${selo(stIG(p), 'Instagram')}${selo(stFB(p), 'Facebook')}</div>
+      </div></button>`;
+  }
+
+  function porDia(lista, maisRecentePrimeiro) {
+    if (!lista.length) return '<div class="vazio"><b>Nada por aqui</b>Nenhum post com esses filtros.</div>';
+    const hoje = chaveDia(new Date().toISOString());
+    const grupos = [];
+    for (const p of lista) {
+      const k = chaveDia(p.quando);
+      if (!grupos.length || grupos[grupos.length - 1].k !== k) grupos.push({ k, iso: p.quando, itens: [] });
+      grupos[grupos.length - 1].itens.push(p);
+    }
+    if (!maisRecentePrimeiro) grupos.forEach(g => g.itens.sort((a, b) => dt(a.quando) - dt(b.quando)));
+    return grupos.map(g => `<div class="dia"><h2>${k1(nomeDia(g.iso))} <small>${dataCurta(g.iso)}</small>${g.k === hoje ? '<span class="hoje">Hoje</span>' : ''}</h2>
+      <div class="grade">${g.itens.map(cartao).join('')}</div></div>`).join('');
+  }
+  const k1 = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+  function desenhar() {
+    const fut = futuros(), pas = passados();
+    $('#cAgenda').textContent = fut.filter(p => p.status === 'agendado').length;
+    $('#cHist').textContent = pas.filter(p => p.status === 'publicado').length;
+    const nApr = (dados.pedidos || []).filter(p => p.status === 'aguardando').length;
+    $('#cPed').textContent = nApr || (dados.pedidos || []).filter(p => ['novo', 'produzindo', 'ajuste'].includes(p.status)).length;
+    $('#cPed').style.background = nApr ? 'var(--erro)' : ''; $('#cPed').style.color = nApr ? '#fff' : '';
+    ['agenda', 'historico', 'resultados', 'pedidos', 'ia'].forEach(a => $('#v' + k1(a)).classList.toggle('esconde', a !== aba));
+    document.querySelectorAll('.aba').forEach(b => { const on = b.dataset.aba === aba; b.classList.toggle('ativa', on); b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', on); if (on) b.scrollIntoView({ block: 'nearest', inline: 'nearest' }); });
+
+    if (aba === 'agenda') {
+      const hoje = chaveDia(new Date().toISOString());
+      const pubHoje = dados.agenda.filter(p => p.status === 'publicado' && chaveDia(p.quando) === hoje).length;
+      const falhas = dados.agenda.filter(p => p.status === 'falhou').length;
+      const fbOk = dados.agenda.filter(p => p.fb && p.fb.status === 'publicado').length;
+      $('#resumo').innerHTML = `
+        <div class="numero destaque"><b>${fut.filter(p => p.status === 'agendado').length}</b><span>agendados</span></div>
+        <div class="numero"><b>${pubHoje}</b><span>publicados hoje</span></div>
+        <div class="numero"><b>${fbOk}</b><span>já no Facebook</span></div>
+        <div class="numero ${falhas ? 'alerta' : ''}"><b>${falhas}</b><span>com falha</span></div>`;
+      const prox = fut.find(p => p.status === 'agendado' && dt(p.quando) > Date.now() - 15 * 60e3);
+      if (prox) {
+        const min = Math.max(0, Math.round((dt(prox.quando) - Date.now()) / 60e3));
+        const falta = min < 60 ? `${min} min` : min < 1440 ? `${Math.floor(min / 60)}h${String(min % 60).padStart(2, '0')}` : `${Math.round(min / 1440)} dia(s)`;
+        $('#proximo').innerHTML = `<div class="proximo" data-id="${prox.id}">
+          ${prox.urls[0] ? `<img src="${esc(prox.urls[0])}" alt="">` : ''}
+          <div style="min-width:0"><span class="rot">Próximo post</span><h3>${k1(nomeDia(prox.quando))}, ${hora(prox.quando)} · ${TIPOS[prox.tipo] || ''}</h3><p>${esc(titulo(prox))}</p></div>
+          <div class="contagem">${min <= 0 ? 'agora' : 'em ' + falta}<small>Instagram e Facebook</small></div></div>`;
+      } else $('#proximo').innerHTML = '';
+      chipsFiltro('#filtrosAgenda', 'agenda');
+      $('#listaAgenda').innerHTML = porDia(filtrar(fut, filtro.agenda), false);
+    }
+    if (aba === 'historico') {
+      chipsFiltro('#filtrosHist', 'historico');
+      $('#listaHist').innerHTML = porDia(filtrar(pas, filtro.historico), true);
+    }
+    if (aba === 'pedidos') desenharPedidos();
+    if (aba === 'resultados') desenharResultados();
+  }
+
+  function desenharPedidos() {
+    const lista = [...(dados.pedidos || [])].sort((a, b) => (b.id || 0) - (a.id || 0));
+    const ST = { novo: ['agend', 'Aguardando produção'], produzindo: ['vai', 'Em produção'], aguardando: ['apr', 'Aguardando aprovação'],
+                 aprovado: ['ok', 'Aprovado e agendado'], ajuste: ['vai', 'Ajuste pedido'], recusado: ['ruim', 'Não vai sair'], feito: ['ok', 'Feito'] };
+    const curtoPed = t => String(t || '').replace(/^\[Briefing completo\]\n/, '').split('\n').slice(0, 3).join(' · ');
+    const pend = lista.filter(p => p.status === 'aguardando' && p.previa);
+    $('#paraAprovar').innerHTML = pend.length ? `<div class="aprovar-lista"><h3><span class="st apr">${pend.length}</span> Para aprovar</h3>
+      ${pend.map(p => {
+        const v = p.previa, passou = dt(v.quando) < Date.now() + 2 * 60e3;
+        return `<article class="apv" data-ped="${p.id}">
+          <div class="apv-imgs ${(v.urls || []).length > 1 ? 'varias' : ''}">${(v.urls || []).map(u => `<a href="${esc(u)}" target="_blank" rel="noopener"><img src="${esc(u)}" alt="Prévia do post" loading="lazy"></a>`).join('')}</div>
+          <div class="apv-info">
+            <div class="linha1"><span class="tag tipo">${TIPOS[v.tipo] || esc(v.tipo)}</span>${p.publico ? `<span class="tag pub">${esc(p.publico)}</span>` : ''}<span class="tag">Pedido #${p.id}</span></div>
+            ${p.resposta ? `<div class="resp">${esc(p.resposta)}</div>` : ''}
+            ${passou ? `<div class="atrasado">O horário marcado já passou. Escolha um novo horário e toque em Aprovado.</div>` : ''}
+            <div><label for="q${p.id}">Vai sair em (horário da Bahia)</label>
+              <input class="campo" type="datetime-local" id="q${p.id}" value="${passou ? '' : paraCampo(v.quando)}" style="max-width:280px"></div>
+            ${v.legenda ? `<details><summary>Ver legenda</summary><p>${esc(v.legenda)}</p></details>` : ''}
+            <details><summary>Ver o pedido</summary><p>${esc(p.texto)}</p></details>
+            <div class="apv-acoes">
+              <button class="btn btn-ok btn-grande" type="button" data-aprovar="${p.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>Aprovado</button>
+              <button class="btn btn-claro btn-grande" type="button" data-abrir-ajuste="${p.id}">Ajustar</button>
+            </div>
+            <div class="apv-ajuste esconde" id="aj${p.id}">
+              <label for="ajt${p.id}">O que precisa ajustar?</label>
+              <textarea class="campo" id="ajt${p.id}" maxlength="760" placeholder="Ex.: troca a foto por um casal na praia e deixa o título mais curto"></textarea>
+              <label class="op gem" style="align-self:flex-start"><input type="checkbox" id="ajg${p.id}"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:16px;height:16px"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>Usar Gemini (foto ao fundo)</span></label>
+              <p class="dica" style="margin:0">Marque para gerar foto nova. Sem marcar, a foto atual é mantida (ou a arte fica só com texto).</p>
+              <div class="apv-acoes"><button class="btn btn-amarelo" type="button" data-ajustar="${p.id}">Enviar ajuste</button>
+                <button class="btn btn-claro" type="button" data-fechar-ajuste="${p.id}">Cancelar</button></div>
+              <p class="dica" style="margin:0">A arte sai da agenda e é refeita na próxima rodada (o computador do Lucas precisa estar ligado).</p>
+            </div>
+          </div></article>`; }).join('')}</div>` : '';
+    $('#listaPedidos').innerHTML = lista.length ? lista.map(p => {
+      const [c, t] = ST[p.status] || ['', p.status || 'Recebido'];
+      const quando = p.createdAt ? fmt(p.createdAt, { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
+      const img = p.previa && (p.previa.urls || [])[0];
+      return `<div class="pedido"><div class="meta"><span class="st ${c}">${esc(t)}</span><span>${esc(quando)}</span>
+        ${p.publico ? `<span class="tag pub">${esc(p.publico)}</span>` : ''}${p.formato ? `<span class="tag">${esc(p.formato)}</span>` : ''}
+        ${p.para_quando && !['aprovado', 'aguardando'].includes(p.status) ? `<span>para ${esc(p.para_quando.slice(0, 10).split('-').reverse().slice(0, 2).join('/'))}${p.para_quando.length > 10 ? ' às ' + esc(p.para_quando.slice(11, 16)) : ''}</span>` : ''}
+        ${p.status === 'aprovado' && p.previa ? `<span>sai ${esc(k1(nomeDia(p.previa.quando)))} ${hora(p.previa.quando)}</span>` : ''}</div>
+        <div style="display:flex;gap:10px;align-items:flex-start">${img && p.status !== 'aguardando' ? `<img src="${esc(img)}" alt="" style="width:48px;height:60px;object-fit:cover;border-radius:8px;flex:none">` : ''}
+        <p style="flex:1;min-width:0">${esc(curtoPed(p.texto))}</p></div>
+        ${p.status === 'ajuste' && p.ajuste ? `<div class="resp">Ajuste: ${esc(p.ajuste)}</div>` : ''}
+        ${p.resposta && p.status !== 'aguardando' ? `<div class="resp">${esc(p.resposta)}</div>` : ''}</div>`;
+    }).join('') : '<div class="vazio" style="padding:36px 16px"><b>Nenhum pedido ainda</b>Use o formulário ao lado ou o briefing completo.</div>';
+  }
+  document.addEventListener('click', async ev => {
+    const t = ev.target.closest('[data-aprovar],[data-abrir-ajuste],[data-fechar-ajuste],[data-ajustar]'); if (!t) return;
+    const id = t.dataset.aprovar || t.dataset.abrirAjuste || t.dataset.fecharAjuste || t.dataset.ajustar;
+    if (t.dataset.abrirAjuste) { $('#aj' + id).classList.remove('esconde'); $('#ajt' + id).focus(); return; }
+    if (t.dataset.fecharAjuste) { $('#aj' + id).classList.add('esconde'); return; }
+    const corpo = t.dataset.aprovar ? { acao: 'aprovar', pedido_id: Number(id), quando: $('#q' + id).value }
+                                    : { acao: 'ajustar', pedido_id: Number(id), ajuste: $('#ajt' + id).value.trim() + '\nUsar Gemini: ' + ($('#ajg' + id).checked ? 'sim (foto nova)' : 'não') };
+    if (corpo.acao === 'aprovar' && !corpo.quando) { aviso('Escolha o horário antes de aprovar.', true); $('#q' + id).focus(); return; }
+    if (corpo.acao === 'ajustar' && corpo.ajuste.trim().length < 3) { aviso('Escreva o que precisa ajustar.', true); $('#ajt' + id).focus(); return; }
+    t.disabled = true;
+    try {
+      await chamar(corpo);
+      aviso(corpo.acao === 'aprovar' ? 'Aprovado. O post entrou na agenda.' : 'Ajuste enviado. A arte será refeita.');
+      await carregar(true);
+    } catch (e) { if (e.senha) return sair('Senha incorreta.'); aviso(e.message, true); t.disabled = false; }
+  });
+
+  // Detalhe do post
+  function abrir(id) {
+    const p = dados.agenda.find(x => String(x.id) === String(id)); if (!p) return;
+    const pode = p.status === 'agendado';
+    const ig = stIG(p), fb = stFB(p);
+    const fbLink = p.fb && p.fb.post_id ? 'https://www.facebook.com/' + encodeURIComponent(p.fb.post_id) : '';
+    $('#detalhe').innerHTML = `
+      <div class="det-img">
+        <img class="grande" id="imgGrande" src="${esc((p.urls || [])[0] || '')}" alt="">
+        ${(p.urls || []).length > 1 ? `<div class="miniaturas">${p.urls.map((u, i) => `<img src="${esc(u)}" data-i="${i}" class="${i ? '' : 'ativa'}" alt="">`).join('')}</div>` : ''}
+      </div>
+      <div class="det-info">
+        <div class="det-topo"><div>
+          <div class="linha1" style="margin-bottom:8px"><span class="tag tipo">${TIPOS[p.tipo] || ''}</span><span class="tag">${esc(p.formato || '')}</span><span class="tag pub">${esc(publico(p))}</span></div>
+          <h3>${k1(nomeDia(p.quando))}, ${dataCurta(p.quando)} às ${hora(p.quando)}</h3></div>
+          <button class="fecha" type="button" id="fechar" aria-label="Fechar">×</button></div>
+
+        <div class="bloco"><h4>Onde saiu</h4>
+          <div class="rede-linha"><b>Instagram</b>${selo(ig, 'Instagram')}${p.permalink ? `<a href="${esc(p.permalink)}" target="_blank" rel="noopener">Ver post</a>` : ''}</div>
+          <div class="rede-linha"><b>Facebook</b>${selo(fb, 'Facebook')}${fbLink ? `<a href="${fbLink}" target="_blank" rel="noopener">Ver post</a>` : ''}</div>
+          ${p.erro ? `<p class="dica" style="color:var(--erro)">Erro: ${esc(p.erro)}</p>` : ''}
+        </div>
+
+        ${blocoMetricas(p)}
+
+        ${pode ? `<div class="bloco"><h4>Horário</h4>
+          <div class="botoes"><input class="campo" type="datetime-local" id="novoQuando" value="${paraCampo(p.quando)}" style="flex:1;min-width:200px">
+          <button class="btn btn-claro" type="button" id="salvaQuando">Mudar horário</button></div>
+          <p class="dica">Horário da Bahia. Sai no Instagram e, em até 5 minutos, no Facebook.</p></div>` : ''}
+
+        ${p.tipo === 'story' ? `<div class="bloco"><h4>Legenda</h4><p class="dica" style="margin:0">Story não leva legenda. O texto está na própria arte.</p></div>` : `<div class="bloco"><h4>Legenda</h4>
+          ${pode ? `<textarea class="campo" id="novaLegenda" maxlength="2200" style="min-height:220px">${esc(p.legenda)}</textarea>
+            <div class="contador" id="contaLegenda"></div>
+            <div class="botoes" style="margin-top:8px"><button class="btn" type="button" id="salvaLegenda">Salvar legenda</button></div>
+            <p class="dica">Toda legenda passa pela trava de compliance (sem promessa de aprovação, sem taxa ou valor em número, sem travessão). No Facebook as hashtags saem automaticamente.</p>`
+          : `<p class="legenda-txt">${esc(p.legenda)}</p>`}
+        </div>`}
+
+        ${p.status === 'aguardando' ? `<div class="bloco"><h4>Aprovação</h4><p class="dica" style="margin:0 0 10px">Este post veio de um pedido e só sai depois de aprovado.</p><div class="botoes"><button class="btn btn-amarelo" type="button" data-ir="pedidos" id="vaiAprovar">Ir para aprovação</button></div></div>` : ''}
+        ${p.status === 'agendado' ? `<div class="botoes"><button class="btn btn-perigo" type="button" id="cancela">Cancelar este post</button></div>` : ''}
+        ${p.status === 'cancelado' ? `<div class="botoes"><button class="btn btn-amarelo" type="button" id="reativa">Voltar a agendar</button></div>
+          <p class="dica" style="margin-top:-8px">Se o horário já passou, mude o horário depois de reativar.</p>` : ''}
+      </div>`;
+    $('#fundo').classList.remove('esconde'); document.body.style.overflow = 'hidden';
+    $('#fechar').onclick = fechar;
+    const mini = document.querySelector('.miniaturas');
+    if (mini) mini.onclick = ev => { const i = ev.target.closest('img'); if (!i) return;
+      $('#imgGrande').src = i.src; mini.querySelectorAll('img').forEach(x => x.classList.toggle('ativa', x === i)); };
+    const leg = $('#novaLegenda');
+    if (leg) { const c = () => $('#contaLegenda').textContent = leg.value.length + ' / 2.200'; leg.oninput = c; c(); }
+    const acao = async (btn, corpo, ok) => {
+      btn.disabled = true;
+      try { await chamar(corpo); aviso(ok); await carregar(true); abrir(id); }
+      catch (e) { if (e.senha) return sair('Senha incorreta.'); aviso(e.message, true); btn.disabled = false; }
+    };
+    if ($('#salvaQuando')) $('#salvaQuando').onclick = e => acao(e.currentTarget, { acao: 'reagendar', row_id: p.id, quando: $('#novoQuando').value }, 'Horário alterado.');
+    if ($('#salvaLegenda')) $('#salvaLegenda').onclick = e => acao(e.currentTarget, { acao: 'legenda', row_id: p.id, legenda: leg.value }, 'Legenda salva.');
+    if ($('#cancela')) $('#cancela').onclick = e => { if (confirm('Cancelar este post? Ele não vai sair no Instagram nem no Facebook.')) acao(e.currentTarget, { acao: 'cancelar', row_id: p.id }, 'Post cancelado.'); };
+    if ($('#reativa')) $('#reativa').onclick = e => acao(e.currentTarget, { acao: 'reativar', row_id: p.id }, 'Post agendado de novo.');
+  }
+  function blocoMetricas(p) {
+    const m = p.metricas; if (!m) return p.status === 'publicado' ? '<div class="bloco"><h4>Resultados</h4><p class="dica" style="margin:0">Os números aparecem em até 2 horas depois da publicação.</p></div>' : '';
+    const L = [['alcance', 'Pessoas alcançadas'], ['views', 'Visualizações'], ['curtidas', 'Curtidas e reações'], ['comentarios', 'Comentários'],
+      ['salvos', 'Salvamentos'], ['compart', 'Compartilhamentos'], ['respostas', 'Respostas ao story'], ['visitas_perfil', 'Visitas ao perfil'],
+      ['seguidores', 'Novos seguidores'], ['cliques', 'Cliques']];
+    const tem = k => (m.ig && m.ig[k] !== undefined) || (m.fb && m.fb[k] !== undefined);
+    const cel = (r, k) => m[r] && m[r][k] !== undefined ? num(m[r][k]) : '<span style="color:var(--cinza);font-weight:500">-</span>';
+    const ult = [m.ig, m.fb].filter(Boolean).map(x => x.coletado_em).sort().pop();
+    const o = soma(p);
+    return `<div class="bloco"><h4>Resultados</h4>
+      <table class="tab-m"><tr><th></th><th>Instagram</th>${m.fb ? '<th>Facebook</th>' : ''}</tr>
+      ${L.filter(([k]) => tem(k)).map(([k, t]) => `<tr><td>${t}</td><td>${cel('ig', k)}</td>${m.fb ? `<td>${cel('fb', k)}</td>` : ''}</tr>`).join('')}</table>
+      <p class="dica">Engajamento: <b>${pct(taxa(o))}</b> das pessoas alcançadas interagiram. Atualizado ${ult ? fmt(ult, { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : ''}.
+      ${p.tipo === 'story' ? 'Story é medido nas primeiras 24 horas.' : 'Os números são atualizados a cada 2 horas por 7 dias.'}
+      ${m.fb && !m.fb.alcance ? ' O alcance do Facebook costuma aparecer algumas horas depois.' : ''}</p></div>`;
+  }
+
+  let periodo = 7;
+  function desenharResultados() {
+    const limite = periodo ? Date.now() - periodo * 864e5 : 0;
+    const lista = dados.agenda.filter(p => p.status === 'publicado' && dt(p.quando) >= limite && soma(p).tem);
+    const seg = `<div class="filtros"><div class="seg" id="segPeriodo">${[[7, '7 dias'], [30, '30 dias'], [0, 'Tudo']].map(([v, t]) =>
+      `<button type="button" data-v="${v}" class="${periodo === v ? 'ativo' : ''}">${t}</button>`).join('')}</div></div>`;
+    if (!lista.length) { $('#resultados').innerHTML = seg + '<div class="vazio"><b>Ainda sem números</b>Os resultados aparecem até 2 horas depois de cada publicação.</div>'; ligaSeg(); return; }
+    const tot = lista.reduce((a, p) => { const o = soma(p); for (const k in a) a[k] += o[k] || 0; return a; }, { alcance: 0, interacoes: 0, salvos: 0, compart: 0, comentarios: 0, respostas: 0 });
+    const grupo = chave => {
+      const g = {};
+      for (const p of lista) { const k = chave(p); const o = soma(p); (g[k] = g[k] || { n: 0, alcance: 0, interacoes: 0 }); g[k].n++; g[k].alcance += o.alcance; g[k].interacoes += o.interacoes; }
+      return Object.entries(g).map(([k, v]) => ({ k, n: v.n, media: v.alcance / v.n, eng: v.alcance ? 100 * v.interacoes / v.alcance : 0 })).sort((a, b) => b.media - a.media);
+    };
+    const barras = (rows, titulo, sub) => {
+      const max = Math.max(...rows.map(r => r.media), 1);
+      return `<div class="painel"><h3>${titulo}</h3><p>${sub}</p>${rows.map(r => `<div class="barra-linha">
+        <div class="nome">${esc(r.k)}<small>${r.n} ${r.n === 1 ? 'post' : 'posts'} · ${pct(r.eng)} engajam.</small></div>
+        <div class="trilho"><i style="width:${(100 * r.media / max).toFixed(1)}%"></i></div><div class="val">${num(r.media)}</div></div>`).join('')}</div>`;
+    };
+    const fmtTipo = p => p.tipo === 'story' ? 'Story' : p.tipo === 'carrossel' ? 'Carrossel' : (p.formato || 'Post');
+    const tops = [...lista].sort((a, b) => soma(b).interacoes - soma(a).interacoes || soma(b).alcance - soma(a).alcance).slice(0, 5);
+    const poucos = lista.length < 10;
+    $('#resultados').innerHTML = seg + `
+      <div class="resumo">
+        <div class="numero destaque"><b>${num(tot.alcance)}</b><span>pessoas alcançadas</span></div>
+        <div class="numero"><b>${num(tot.interacoes)}</b><span>interações</span></div>
+        <div class="numero"><b>${num(tot.salvos + tot.compart)}</b><span>salvamentos e compartilhamentos</span></div>
+        <div class="numero"><b>${pct(tot.alcance ? 100 * tot.interacoes / tot.alcance : 0)}</b><span>engajamento médio</span></div>
+      </div>
+      <div class="res-grade">
+        ${barras(grupo(fmtTipo), 'Por formato', 'Alcance médio por post, somando Instagram e Facebook.')}
+        ${barras(grupo(publico), 'Por público', 'Alcance médio por post de cada público.')}
+        <div class="painel" style="grid-column:1/-1"><h3>Posts com mais interações</h3><p>Curtidas, comentários, salvamentos, compartilhamentos e respostas.</p>
+          ${tops.map((p, i) => { const o = soma(p); return `<div class="top" data-id="${p.id}"><span class="pos">${i + 1}</span>
+            <img src="${esc((p.urls || [])[0] || '')}" alt="" loading="lazy"><div class="txt"><b>${esc(titulo(p))}</b>
+            <span>${fmtTipo(p)} · ${esc(publico(p))} · ${dataCurta(p.quando)}</span></div>
+            <div class="metr" style="flex-direction:column;align-items:flex-end;gap:2px"><span><b>${num(o.interacoes)}</b> interações</span><span><b>${num(o.alcance)}</b> alcançados</span></div></div>`; }).join('')}
+        </div>
+      </div>
+      <p class="nota">${poucos ? `<b>Ainda são poucos posts (${lista.length}).</b> As comparações entre formatos e públicos ficam confiáveis depois de 2 a 3 semanas de publicação. ` : ''}
+        Engajamento = interações divididas pelas pessoas alcançadas. Os números de cada post são atualizados a cada 2 horas durante 7 dias (stories, 24 horas).</p>`;
+    ligaSeg();
+    document.querySelectorAll('#resultados .top').forEach(t => t.onclick = () => abrir(t.dataset.id));
+  }
+  function ligaSeg() { const s = $('#segPeriodo'); if (s) s.onclick = ev => { const b = ev.target.closest('button'); if (!b) return; periodo = Number(b.dataset.v); desenharResultados(); }; }
+
+  function fechar() { $('#fundo').classList.add('esconde'); document.body.style.overflow = ''; }
+
+  // Eventos
+  $('#formLogin').onsubmit = ev => { ev.preventDefault(); senha = $('#senha').value.trim(); $('#msgLogin').textContent = '';
+    guarda.por('facilite_painel_senha', senha); carregar(); };
+  $('#btnSair').onclick = () => sair();
+  $('#btnAtualizar').onclick = () => carregar();
+
+  // Aba Criar com IA: briefing completo. A geração automática está INATIVA (IA_ATIVA=false, sem chave conectada).
+  // Enquanto isso, o briefing vira um pedido comum (ação 'pedir', limite de 1.500 caracteres no servidor).
+  const IA_ATIVA = false;
+  const ir = destino => { fechar(); aba = destino; desenhar(); window.scrollTo({ top: 0 }); };
+  $('#btnNovo').onclick = () => ir('ia');
+  document.addEventListener('click', ev => { const b = ev.target.closest('[data-ir]'); if (b) ir(b.dataset.ir); });
+  const val = n => (document.querySelector(`#iaForm input[name="${n}"]:checked`) || {}).value || '';
+  const txt = id => ($('#' + id).value || '').trim();
+  function briefing() {
+    const b = { Assunto: txt('iaAssunto'), Produto: val('produto'), 'Público': val('publico'), Tom: val('tom'),
+      Formato: val('formato') + (val('formato') === 'Carrossel' ? ` (${$('#iaSlides').value} cartões)` : ''),
+      Imagem: val('imagem') === 'Com foto' ? 'Com foto (Gemini)' : 'Só texto', 'Usar Gemini': val('imagem') === 'Com foto' ? 'sim' : 'não' };
+    if (val('imagem') === 'Com foto') b.Foto = txt('iaCena') || 'IA escolhe a cena';
+    else b.Fundo = val('fundo');
+    if (txt('iaTitulo')) b['Título'] = txt('iaTitulo');
+    if (txt('iaDestaque')) b.Destaque = txt('iaDestaque');
+    if (txt('iaCta')) b.Chamada = txt('iaCta');
+    b.Legenda = val('legenda') === 'Eu escrevo' ? 'Minha: ' + (txt('iaLegTexto') || '(vazia)') : `IA escreve, ${val('tamanho').toLowerCase()}`;
+    b.Emojis = val('emojis');
+    b.Hashtags = val('hashtags') === 'As minhas' ? (txt('iaTags') || '(vazias)') : val('hashtags');
+    if (txt('iaPode')) b.Pode = txt('iaPode');
+    if (txt('iaNaoPode')) b['Não pode'] = txt('iaNaoPode');
+    b.Quando = 'Melhor horário';
+    if (val('quando') === 'Escolher' && $('#iaData').value) { const [d, h] = $('#iaData').value.split('T'); b.Quando = d.split('-').reverse().join('/') + ' às ' + h; }
+    return b;
+  }
+  const textoPedido = b => '[Briefing completo]\n' + Object.entries(b).map(([k, v]) => `${k}: ${v}`).join('\n');
+  function atualizarIa() {
+    const f = val('formato'), foto = val('imagem') === 'Com foto';
+    $('#grpSlides').classList.toggle('some', f !== 'Carrossel');
+    $('#grpCena').classList.toggle('some', !foto);
+    $('#grpFundo').classList.toggle('some', foto);
+    $('#grpLegTexto').classList.toggle('some', val('legenda') !== 'Eu escrevo');
+    $('#grpLegTam').classList.toggle('some', val('legenda') === 'Eu escrevo');
+    $('#grpTags').classList.toggle('some', val('hashtags') !== 'As minhas');
+    $('#grpData').classList.toggle('some', val('quando') !== 'Escolher');
+    const b = briefing();
+    const mostrar = ['Assunto', 'Produto', 'Público', 'Formato', 'Imagem', 'Fundo', 'Legenda', 'Hashtags', 'Quando'];
+    $('#iaResumo').innerHTML = mostrar.filter(k => b[k]).map(k => `<dt>${k}</dt><dd>${esc(k === 'Assunto' ? (b[k] || 'falta preencher') : b[k]).slice(0, 120)}</dd>`).join('');
+    const n = textoPedido(b).length;
+    $('#iaTam').textContent = n + ' / 1.500 caracteres';
+    $('#iaTam').style.color = n > 1500 ? '#ff9b8f' : '';
+  }
+  $('#iaForm').addEventListener('input', atualizarIa);
+  $('#iaForm').addEventListener('change', atualizarIa);
+  $('#iaForm').onsubmit = ev => ev.preventDefault();
+  $('#iaChat').onsubmit = ev => ev.preventDefault();
+  $('#iaGerar').disabled = !IA_ATIVA; $('#iaTexto').disabled = !IA_ATIVA; $('#iaEnviar').disabled = !IA_ATIVA;
+  $('#iaFaixa').classList.toggle('esconde', IA_ATIVA);
+  $('#iaPedir').onclick = async ev => {
+    const btn = ev.currentTarget, m = $('#iaMsg'); m.className = 'msg'; m.textContent = '';
+    const b = briefing();
+    if (b.Assunto.length < 3) { m.textContent = 'Escreva o assunto do post na etapa 1.'; m.className = 'msg ruim'; $('#iaAssunto').focus(); return; }
+    const texto = textoPedido(b);
+    if (texto.length > 1500) { m.textContent = 'O briefing passou de 1.500 caracteres. Encurte os textos livres.'; m.className = 'msg ruim'; return; }
+    btn.disabled = true;
+    try {
+      const pub = b['Público'].startsWith('INSS') ? 'INSS' : b['Público'].includes('Bahia') ? 'Governo da Bahia' : b['Público'].startsWith('SIAPE') ? 'SIAPE' : b['Público'].startsWith('CLT') ? 'CLT' : b['Público'];
+      await chamar({ acao: 'pedir', texto, publico: pub, formato: val('formato'), para_quando: val('quando') === 'Escolher' ? ($('#iaData').value || '') : '' });
+      m.textContent = 'Pedido enviado. Acompanhe na aba Pedidos.'; m.className = 'msg boa'; await carregar(true);
+    } catch (e) { if (e.senha) return sair('Senha incorreta.'); m.textContent = e.message; m.className = 'msg ruim'; }
+    btn.disabled = false;
+  };
+  $('#iaLimpar').onclick = () => { if (!confirm('Limpar todo o briefing?')) return; $('#iaForm').reset(); $('#iaMsg').textContent = ''; atualizarIa(); };
+  atualizarIa();
+
+  const abasEl = $('#abas');
+  const fimAbas = () => abasEl.classList.toggle('no-fim', abasEl.scrollLeft + abasEl.clientWidth >= abasEl.scrollWidth - 4);
+  abasEl.addEventListener('scroll', fimAbas, { passive: true }); window.addEventListener('resize', fimAbas); fimAbas();
+  $('#abas').onclick = ev => { const b = ev.target.closest('.aba'); if (!b) return; aba = b.dataset.aba; desenhar(); };
+  document.addEventListener('click', ev => { const c = ev.target.closest('.cartao, .proximo'); if (c && c.dataset.id) abrir(c.dataset.id); });
+  $('#fundo').onclick = ev => { if (ev.target.id === 'fundo') fechar(); };
+  document.addEventListener('keydown', ev => { if (ev.key === 'Escape') fechar(); });
+  $('#formPedido').onsubmit = async ev => {
+    ev.preventDefault(); const btn = ev.submitter || ev.target.querySelector('button'); btn.disabled = true;
+    const m = $('#msgPedido'); m.textContent = ''; m.className = 'msg';
+    try {
+      await chamar({ acao: 'pedir', texto: $('#pTexto').value + '\n\nUsar Gemini: ' + ($('#pGemini').checked ? 'sim' : 'não'), publico: $('#pPublico').value, formato: $('#pFormato').value, para_quando: $('#pQuando').value ? $('#pQuando').value + ($('#pHora').value ? 'T' + $('#pHora').value : '') : '' });
+      $('#pTexto').value = ''; $('#pGemini').checked = false; $('#pQuando').value = ''; $('#pHora').value = ''; m.textContent = 'Pedido enviado.'; m.className = 'msg boa'; await carregar(true);
+    } catch (e) { if (e.senha) return sair('Senha incorreta.'); m.textContent = e.message; m.className = 'msg ruim'; }
+    btn.disabled = false;
+  };
+  setInterval(() => { if (senha && document.visibilityState === 'visible' && $('#fundo').classList.contains('esconde')) carregar(true); }, 120000);
+
+  if (senha) carregar(); else { $('#carregando').classList.add('esconde'); $('#senha').focus(); }
+})();
+</script>
+</body>
+</html>

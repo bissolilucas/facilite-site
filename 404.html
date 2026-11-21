@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página não encontrada | Facilite Crédito</title>
+<meta name="description" content="Facilite Crédito: correspondente bancário há 10 anos na Bahia. Crédito consignado para aposentados e pensionistas do INSS, servidores públicos e trabalhadores CLT.">
+<link rel="canonical" href="https://www.facilitecredito.com.br/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Página não encontrada | Facilite Crédito">
+<meta property="og:description" content="Facilite Crédito: correspondente bancário há 10 anos na Bahia. Crédito consignado para aposentados e pensionistas do INSS, servidores públicos e trabalhadores CLT.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta name="theme-color" content="#001E5A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Montserrat:wght@600;700;800;900&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marinho: #001E5A; --escuro: #011538; --laranja: #FB7303; --laranja-claro: #FF9A3D;
+    --creme: #F7F3EC; --tinta: #0E1B3D; --cinza: #4A5674; --linha: #E4DED3; --branco: #fff;
+    --raio: 22px; --max: 1160px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { font-family: "Nunito Sans", sans-serif; font-size: 18px; line-height: 1.6; color: var(--tinta); background: var(--creme); }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: "Montserrat", sans-serif; line-height: 1.08; letter-spacing: -.02em; }
+  .wrap { width: min(var(--max), 100% - 40px); margin-inline: auto; }
+  .olho { display: inline-flex; align-items: center; gap: 12px; font-family: "Montserrat"; font-weight: 700; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--laranja); }
+  .olho::before { content: ""; width: 34px; height: 3px; background: currentColor; border-radius: 2px; }
+
+  /* Botões */
+  .btn { display: inline-flex; align-items: center; gap: 12px; font-family: "Montserrat"; font-weight: 800; font-size: 17px; text-decoration: none;
+         padding: 16px 26px; border-radius: 999px; transition: transform .2s, box-shadow .2s, background .2s; }
+  .btn:focus-visible { outline: 3px solid var(--laranja-claro); outline-offset: 3px; }
+  .btn-zap { background: var(--laranja); color: #fff; box-shadow: 0 8px 0 rgba(0,0,0,.18); }
+  .btn-zap:hover { transform: translateY(-2px); box-shadow: 0 10px 0 rgba(0,0,0,.18); }
+  .btn-linha { border: 2px solid currentColor; }
+  .btn-linha:hover { background: rgba(255,255,255,.08); }
+  .btn svg { flex: none; }
+
+  /* Cabeçalho */
+  header.topo { position: sticky; top: 0; z-index: 20; background: rgba(247,243,236,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linha); }
+  header.topo .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 20px; }
+  .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo b { display: block; font-family: "Comfortaa"; font-size: 28px; line-height: .9; color: var(--marinho); }
+  .logo small { display: block; font-family: "Montserrat"; font-weight: 700; font-size: 10px; letter-spacing: .42em; color: var(--laranja); text-align: center; margin-top: 4px; }
+  .claro .logo b { color: #fff; }
+  nav.menu { display: flex; gap: 28px; font-family: "Montserrat"; font-weight: 700; font-size: 15px; }
+  nav.menu a { text-decoration: none; color: var(--marinho); }
+  nav.menu a:hover { color: var(--laranja); }
+  header.topo .btn { padding: 12px 20px; font-size: 15px; box-shadow: none; }
+  @media (max-width: 900px) { nav.menu { display: none; } }
+  @media (max-width: 520px) { header.topo .btn span { display: none; } header.topo .btn { padding: 12px; } }
+
+  /* Rodapé */
+  footer.base { background: var(--escuro); color: #C9D1E6; padding: 64px 0 36px; font-size: 16px; }
+  footer.base .grade { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+  footer.base h4 { font-family: "Montserrat"; color: #fff; font-size: 15px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
+  footer.base ul { list-style: none; display: grid; gap: 8px; }
+  footer.base a { text-decoration: none; } footer.base a:hover { color: var(--laranja-claro); }
+  footer.base .legal { margin-top: 44px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.12); font-size: 14px; line-height: 1.55; color: #9AA6C4; }
+  @media (max-width: 800px) { footer.base .grade { grid-template-columns: 1fr; } }
+
+  /* Botão flutuante */
+  .flutuante { position: fixed; right: 18px; bottom: 18px; z-index: 30; width: 62px; height: 62px; border-radius: 50%; background: #25D366; display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sobe { opacity: 0; transform: translateY(18px); animation: sobe .7s cubic-bezier(.2,.7,.2,1) forwards; }
+    .d1 { animation-delay: .08s } .d2 { animation-delay: .18s } .d3 { animation-delay: .28s } .d4 { animation-delay: .4s }
+    @keyframes sobe { to { opacity: 1; transform: none; } }
+  }
+  
+  .vazio { min-height: 60vh; display: grid; place-items: center; text-align: center; padding: 80px 20px; }
+  .vazio h1 { font-size: clamp(34px, 5vw, 52px); font-weight: 900; color: var(--marinho); margin: 14px 0; }
+  .vazio p { color: var(--cinza); font-size: 19px; }
+  .vazio .btn { margin-top: 28px; }
+
+</style>
+</head>
+<body>
+<header class="topo">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="Facilite Crédito, página inicial"><svg width="46" height="46" viewBox="0 0 100 100" aria-hidden="true">
+  <rect x="12" y="28" width="60" height="58" fill="none" stroke="#FB7303" stroke-width="5" transform="rotate(-3 42 57)"/>
+  <rect x="19" y="21" width="60" height="58" fill="none" stroke="#001E5A" stroke-width="5" transform="rotate(-3 49 50)"/>
+  <path d="M22 47 L37 40 L50 59 L83 6 L98 11 L53 81 Z" fill="#FB7303"/>
+</svg><span><b>Facilite</b><small>CRÉDITO</small></span></a>
+    <nav class="menu" aria-label="Seções">
+      <a href="/#para-quem">Para quem</a><a href="/#como-funciona">Como funciona</a><a href="/#seguranca">Segurança</a><a href="/#duvidas">Dúvidas</a>
+    </nav>
+    <a class="btn btn-zap" href="https://wa.me/5573998288566" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.4Z"/></svg><span>Falar no WhatsApp</span></a>
+  </div>
+</header>
+
+<main>
+<section class="vazio"><div>
+  <span class="olho">Erro 404</span>
+  <h1>Essa página não existe</h1>
+  <p>Mas a gente continua aqui para te atender.</p>
+  <a class="btn btn-zap" href="/">Voltar ao início</a>
+</div></section>
+</main>
+
+<footer class="base claro">
+  <div class="wrap">
+    <div class="grade">
+      <div>
+        <a class="logo" href="/"><svg width="46" height="46" viewBox="0 0 100 100" aria-hidden="true">
+  <rect x="12" y="28" width="60" height="58" fill="none" stroke="#FB7303" stroke-width="5" transform="rotate(-3 42 57)"/>
+  <rect x="19" y="21" width="60" height="58" fill="none" stroke="#fff" stroke-width="5" transform="rotate(-3 49 50)"/>
+  <path d="M22 47 L37 40 L50 59 L83 6 L98 11 L53 81 Z" fill="#FB7303"/>
+</svg><span><b>Facilite</b><small>CRÉDITO</small></span></a>
+        <p style="margin-top:18px;max-width:380px">Correspondente bancário há 10 anos, especialista em convênios. Atendimento humano do começo ao fim.</p>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="https://wa.me/5573998288566" target="_blank" rel="noopener">WhatsApp (73) 9 9828-8566</a></li>
+          <li><a href="https://www.instagram.com/facilitecredito/" target="_blank" rel="noopener">Instagram @facilitecredito</a></li>
+          <li><a href="mailto:lucas@facilitecredito.com.br">lucas@facilitecredito.com.br</a></li>
+          <li>Rua Álvares Cabral, 01, Centro, Jequié/BA, CEP 45200-256</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Institucional</h4>
+        <ul>
+          <li><a href="/politicadeprivacidade">Política de Privacidade</a></li>
+          <li><a href="/termosdeuso">Termos de Uso</a></li>
+          <li><a href="/politicadeprivacidade#exclusao-de-dados">Excluir meus dados</a></li>
+          <li><a href="/#duvidas">Perguntas frequentes</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">
+      Total Administração e Serviços LTDA, CNPJ 28.441.609/0001-15. 
+      A Facilite Crédito atua como correspondente bancário, prestando serviços de atendimento em nome das instituições financeiras contratantes, nos termos da Resolução CMN nº 4.935/2021. Não somos banco e não concedemos crédito diretamente. Todo crédito está sujeito a análise e aprovação da instituição financeira. Antes de contratar, consulte as condições, a taxa de juros e o Custo Efetivo Total (CET) da operação. A Facilite Crédito não cobra nenhum valor antecipado para liberar crédito.
+    </p>
+  </div>
+</footer>
+
+<a class="flutuante" href="https://wa.me/5573998288566" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg width="32" height="32" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.4Z"/></svg></a>
+</body>
+</html>

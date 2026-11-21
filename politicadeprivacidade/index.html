@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de Privacidade | Facilite Crédito</title>
+<meta name="description" content="Como a Facilite Crédito coleta, usa, compartilha e protege os seus dados pessoais, de acordo com a Lei Geral de Proteção de Dados (LGPD).">
+<link rel="canonical" href="https://www.facilitecredito.com.br/politicadeprivacidade">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Política de Privacidade | Facilite Crédito">
+<meta property="og:description" content="Como a Facilite Crédito coleta, usa, compartilha e protege os seus dados pessoais, de acordo com a Lei Geral de Proteção de Dados (LGPD).">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta name="theme-color" content="#001E5A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Montserrat:wght@600;700;800;900&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marinho: #001E5A; --escuro: #011538; --laranja: #FB7303; --laranja-claro: #FF9A3D;
+    --creme: #F7F3EC; --tinta: #0E1B3D; --cinza: #4A5674; --linha: #E4DED3; --branco: #fff;
+    --raio: 22px; --max: 1160px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { font-family: "Nunito Sans", sans-serif; font-size: 18px; line-height: 1.6; color: var(--tinta); background: var(--creme); }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: "Montserrat", sans-serif; line-height: 1.08; letter-spacing: -.02em; }
+  .wrap { width: min(var(--max), 100% - 40px); margin-inline: auto; }
+  .olho { display: inline-flex; align-items: center; gap: 12px; font-family: "Montserrat"; font-weight: 700; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--laranja); }
+  .olho::before { content: ""; width: 34px; height: 3px; background: currentColor; border-radius: 2px; }
+
+  /* Botões */
+  .btn { display: inline-flex; align-items: center; gap: 12px; font-family: "Montserrat"; font-weight: 800; font-size: 17px; text-decoration: none;
+         padding: 16px 26px; border-radius: 999px; transition: transform .2s, box-shadow .2s, background .2s; }
+  .btn:focus-visible { outline: 3px solid var(--laranja-claro); outline-offset: 3px; }
+  .btn-zap { background: var(--laranja); color: #fff; box-shadow: 0 8px 0 rgba(0,0,0,.18); }
+  .btn-zap:hover { transform: translateY(-2px); box-shadow: 0 10px 0 rgba(0,0,0,.18); }
+  .btn-linha { border: 2px solid currentColor; }
+  .btn-linha:hover { background: rgba(255,255,255,.08); }
+  .btn svg { flex: none; }
+
+  /* Cabeçalho */
+  header.topo { position: sticky; top: 0; z-index: 20; background: rgba(247,243,236,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linha); }
+  header.topo .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 20px; }
+  .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo b { display: block; font-family: "Comfortaa"; font-size: 28px; line-height: .9; color: var(--marinho); }
+  .logo small { display: block; font-family: "Montserrat"; font-weight: 700; font-size: 10px; letter-spacing: .42em; color: var(--laranja); text-align: center; margin-top: 4px; }
+  .claro .logo b { color: #fff; }
+  nav.menu { display: flex; gap: 28px; font-family: "Montserrat"; font-weight: 700; font-size: 15px; }
+  nav.menu a { text-decoration: none; color: var(--marinho); }
+  nav.menu a:hover { color: var(--laranja); }
+  header.topo .btn { padding: 12px 20px; font-size: 15px; box-shadow: none; }
+  @media (max-width: 900px) { nav.menu { display: none; } }
+  @media (max-width: 520px) { header.topo .btn span { display: none; } header.topo .btn { padding: 12px; } }
+
+  /* Rodapé */
+  footer.base { background: var(--escuro); color: #C9D1E6; padding: 64px 0 36px; font-size: 16px; }
+  footer.base .grade { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+  footer.base h4 { font-family: "Montserrat"; color: #fff; font-size: 15px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
+  footer.base ul { list-style: none; display: grid; gap: 8px; }
+  footer.base a { text-decoration: none; } footer.base a:hover { color: var(--laranja-claro); }
+  footer.base .legal { margin-top: 44px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.12); font-size: 14px; line-height: 1.55; color: #9AA6C4; }
+  @media (max-width: 800px) { footer.base .grade { grid-template-columns: 1fr; } }
+
+  /* Botão flutuante */
+  .flutuante { position: fixed; right: 18px; bottom: 18px; z-index: 30; width: 62px; height: 62px; border-radius: 50%; background: #25D366; display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sobe { opacity: 0; transform: translateY(18px); animation: sobe .7s cubic-bezier(.2,.7,.2,1) forwards; }
+    .d1 { animation-delay: .08s } .d2 { animation-delay: .18s } .d3 { animation-delay: .28s } .d4 { animation-delay: .4s }
+    @keyframes sobe { to { opacity: 1; transform: none; } }
+  }
+  
+  .capa { background: var(--marinho); color: #fff; padding: 72px 0 60px; position: relative; overflow: hidden; }
+  .capa::before { content: ""; position: absolute; right: -10%; top: -60%; width: 30%; height: 240%; background: var(--laranja); transform: rotate(24deg); }
+  .capa .wrap { position: relative; }
+  .capa h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 900; margin-top: 14px; }
+  .capa p { color: #C9D1E6; margin-top: 12px; font-size: 17px; }
+  .doc { display: grid; grid-template-columns: 260px 1fr; gap: 56px; padding: 64px 0 96px; }
+  .indice { position: sticky; top: 100px; align-self: start; font-size: 15px; }
+  .indice b { font-family: "Montserrat"; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--laranja); }
+  .indice ol { margin-top: 12px; padding-left: 20px; display: grid; gap: 6px; color: var(--cinza); }
+  .indice a { text-decoration: none; } .indice a:hover { color: var(--laranja); }
+  .texto { max-width: 760px; }
+  .texto h2 { font-size: 26px; font-weight: 800; color: var(--marinho); margin: 46px 0 14px; scroll-margin-top: 100px; }
+  .texto h2:first-child { margin-top: 0; }
+  .texto p, .texto li { color: #2F3B5A; font-size: 18px; }
+  .texto p + p { margin-top: 12px; }
+  .texto ul { margin: 12px 0 0 22px; display: grid; gap: 8px; }
+  .texto strong { color: var(--tinta); }
+  .caixa { background: #fff; border: 1px solid var(--linha); border-left: 6px solid var(--laranja); border-radius: 16px; padding: 22px 26px; margin-top: 18px; }
+  .caixa .btn { margin-top: 14px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 16px; background: #fff; border-radius: 14px; overflow: hidden; }
+  th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--linha); vertical-align: top; }
+  th { font-family: "Montserrat"; font-size: 14px; background: var(--marinho); color: #fff; }
+  @media (max-width: 900px) { .doc { grid-template-columns: 1fr; } .indice { position: static; } table { font-size: 15px; } }
+
+</style>
+</head>
+<body>
+<header class="topo">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="Facilite Crédito, página inicial"><svg width="46" height="46" viewBox="0 0 100 100" aria-hidden="true">
+  <rect x="12" y="28" width="60" height="58" fill="none" stroke="#FB7303" stroke-width="5" transform="rotate(-3 42 57)"/>
+  <rect x="19" y="21" width="60" height="58" fill="none" stroke="#001E5A" stroke-width="5" transform="rotate(-3 49 50)"/>
+  <path d="M22 47 L37 40 L50 59 L83 6 L98 11 L53 81 Z" fill="#FB7303"/>
+</svg><span><b>Facilite</b><small>CRÉDITO</small></span></a>
+    <nav class="menu" aria-label="Seções">
+      <a href="/#para-quem">Para quem</a><a href="/#como-funciona">Como funciona</a><a href="/#seguranca">Segurança</a><a href="/#duvidas">Dúvidas</a>
+    </nav>
+    <a class="btn btn-zap" href="https://wa.me/5573998288566" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.4Z"/></svg><span>Falar no WhatsApp</span></a>
+  </div>
+</header>
+
+<main>
+
+<section class="capa">
+  <div class="wrap">
+    <span class="olho">LGPD · Lei nº 13.709/2018</span>
+    <h1>Política de Privacidade</h1>
+    <p>Versão 1.0, atualizada em 18 de novembro de 2026.</p>
+  </div>
+</section>
+
+<div class="wrap doc">
+  <nav class="indice" aria-label="Índice">
+    <b>Nesta página</b>
+    <ol>
+      <li><a href="#quem-somos">Quem somos</a></li><li><a href="#dados">Dados que coletamos</a></li><li><a href="#como-coletamos">Como coletamos</a></li>
+      <li><a href="#finalidades">Para que usamos</a></li><li><a href="#compartilhamento">Com quem compartilhamos</a></li><li><a href="#guarda">Por quanto tempo guardamos</a></li>
+      <li><a href="#seguranca-dados">Segurança</a></li><li><a href="#direitos">Seus direitos</a></li><li><a href="#exclusao-de-dados">Excluir meus dados</a></li>
+      <li><a href="#cookies">Cookies</a></li><li><a href="#contato">Contato</a></li><li><a href="#alteracoes">Alterações</a></li>
+    </ol>
+  </nav>
+
+  <article class="texto">
+    <p>A sua privacidade é importante para nós. Esta política explica, em linguagem simples, quais dados pessoais a Facilite Crédito coleta, por que coleta, com quem compartilha e quais são os seus direitos, conforme a Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018, a LGPD).</p>
+
+    <h2 id="quem-somos">1. Quem somos</h2>
+    <p>A <strong>Facilite Crédito</strong> (Total Administração e Serviços LTDA, CNPJ 28.441.609/0001-15) é um correspondente bancário: prestamos serviços de atendimento em nome de bancos e financeiras parceiros, nos termos da Resolução CMN nº 4.935/2021. Endereço: Rua Álvares Cabral, 01, Centro, Jequié/BA, CEP 45200-256.</p>
+    <p>Para os dados que coletamos no nosso atendimento, a Facilite Crédito é a <strong>controladora</strong>, ou seja, quem decide como eles são tratados. Quando você contrata uma operação, a instituição financeira também passa a tratar seus dados como controladora, de acordo com a política de privacidade dela.</p>
+
+    <h2 id="dados">2. Dados que coletamos</h2>
+    <p>Coletamos apenas o necessário para atender você:</p>
+    <ul>
+      <li><strong>Identificação e contato:</strong> nome, telefone, WhatsApp, e-mail, cidade e mensagens que você nos envia.</li>
+      <li><strong>Dados para simulação e contratação:</strong> CPF, RG ou outro documento com foto, data de nascimento, endereço, número do benefício ou matrícula, órgão empregador, extrato do benefício ou contracheque, dados bancários para recebimento e informações sobre contratos de crédito que você já tem.</li>
+      <li><strong>Redes sociais:</strong> quando você interage com nossos perfis no Instagram ou Facebook (comentários, mensagens e respostas a stories), recebemos o nome de usuário e o conteúdo da interação.</li>
+      <li><strong>Navegação no site:</strong> registros técnicos gerados pelo provedor de hospedagem, como endereço IP, data e hora de acesso, usados apenas para segurança e funcionamento do site.</li>
+    </ul>
+    <p>Não coletamos dados pessoais sensíveis (como saúde, religião ou biometria) para as nossas finalidades. Nossos serviços não são direcionados a menores de 18 anos.</p>
+
+    <h2 id="como-coletamos">3. Como coletamos</h2>
+    <p>Diretamente com você, quando você nos procura pelo WhatsApp, telefone, redes sociais ou na loja, e quando você nos envia documentos. Também podemos consultar, com a sua autorização e somente para a simulação solicitada, informações nos sistemas das instituições financeiras e dos convênios (como margem consignável disponível).</p>
+
+    <h2 id="finalidades">4. Para que usamos seus dados</h2>
+    <table>
+      <thead><tr><th>Finalidade</th><th>Base legal (LGPD, art. 7º)</th></tr></thead>
+      <tbody>
+        <tr><td>Responder seus contatos e tirar dúvidas</td><td>Procedimentos preliminares a um contrato, a seu pedido (inciso V)</td></tr>
+        <tr><td>Fazer simulações, consultar margem e preparar propostas de crédito</td><td>Procedimentos preliminares e execução de contrato (inciso V)</td></tr>
+        <tr><td>Encaminhar a proposta à instituição financeira escolhida e acompanhar o processo</td><td>Execução de contrato (inciso V)</td></tr>
+        <tr><td>Cumprir obrigações legais e regulatórias, como prevenção à lavagem de dinheiro e às fraudes e atendimento ao Banco Central</td><td>Cumprimento de obrigação legal ou regulatória (inciso II)</td></tr>
+        <tr><td>Prevenir golpes e garantir a segurança do atendimento</td><td>Legítimo interesse (inciso IX) e proteção do crédito (inciso X)</td></tr>
+        <tr><td>Enviar novidades e ofertas pelo WhatsApp</td><td>Consentimento (inciso I), que você pode retirar a qualquer momento</td></tr>
+        <tr><td>Defender nossos direitos em processos administrativos ou judiciais</td><td>Exercício regular de direitos (inciso VI)</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="compartilhamento">5. Com quem compartilhamos</h2>
+    <p><strong>Não vendemos seus dados.</strong> Compartilhamos somente o necessário com:</p>
+    <ul>
+      <li><strong>Instituições financeiras parceiras</strong>, para a análise e a contratação da operação que você solicitou.</li>
+      <li><strong>Prestadores de serviço de tecnologia</strong>, como sistemas de atendimento e mensagens, armazenamento em nuvem e hospedagem, que tratam os dados apenas sob nossas instruções e com obrigações de confidencialidade.</li>
+      <li><strong>Autoridades públicas</strong>, quando houver obrigação legal ou ordem judicial.</li>
+    </ul>
+    <p>Alguns desses prestadores podem armazenar dados em servidores fora do Brasil. Nesses casos, adotamos as garantias previstas no art. 33 da LGPD.</p>
+
+    <h2 id="guarda">6. Por quanto tempo guardamos</h2>
+    <p>Mantemos seus dados pelo tempo necessário para cumprir as finalidades desta política. Depois disso, eles são excluídos ou anonimizados, exceto quando a lei, a regulação do Banco Central ou os contratos com as instituições financeiras exigirem a guarda por prazo maior, ou para a defesa de direitos.</p>
+    <p>Se você só fez uma simulação e não contratou, apagamos os documentos enviados quando deixarem de ser necessários, ou antes, se você pedir.</p>
+
+    <h2 id="seguranca-dados">7. Segurança</h2>
+    <p>Usamos medidas técnicas e administrativas para proteger seus dados contra acessos não autorizados, perda ou vazamento, como controle de acesso por usuário, senhas, conexões criptografadas e acesso restrito à equipe que precisa dos dados para atender você.</p>
+    <div class="caixa"><strong>Atenção a golpes:</strong> a Facilite Crédito nunca pede depósito, PIX ou pagamento antecipado para liberar crédito, nem pede sua senha bancária. Desconfie de contatos em nosso nome por outros números.</div>
+
+    <h2 id="direitos">8. Seus direitos</h2>
+    <p>Pela LGPD (art. 18), você pode, a qualquer momento e de graça:</p>
+    <ul>
+      <li>confirmar se tratamos seus dados e ter acesso a eles;</li>
+      <li>corrigir dados incompletos, errados ou desatualizados;</li>
+      <li>pedir a anonimização, o bloqueio ou a eliminação de dados desnecessários ou tratados em desacordo com a lei;</li>
+      <li>pedir a portabilidade dos dados a outro fornecedor;</li>
+      <li>pedir a eliminação dos dados tratados com base no seu consentimento;</li>
+      <li>saber com quem compartilhamos seus dados;</li>
+      <li>retirar o consentimento, por exemplo para deixar de receber ofertas;</li>
+      <li>apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD), em <a href="https://www.gov.br/anpd" target="_blank" rel="noopener">gov.br/anpd</a>.</li>
+    </ul>
+
+    <h2 id="exclusao-de-dados">9. Como pedir a exclusão dos seus dados</h2>
+    <p>Você pode pedir a exclusão dos seus dados pessoais, inclusive dos recebidos pelas nossas páginas no Instagram e no Facebook, de forma simples:</p>
+    <div class="caixa">
+      <ol style="margin-left:22px;display:grid;gap:8px">
+        <li>Envie uma mensagem pelo WhatsApp <a href="https://wa.me/5573998288566" target="_blank" rel="noopener">(73) 9 9828-8566</a> ou pelo e-mail <a href="mailto:lucas@facilitecredito.com.br">lucas@facilitecredito.com.br</a> com o texto <strong>"Quero excluir meus dados"</strong>.</li>
+        <li>Informe seu nome completo e o telefone ou usuário que usou para falar com a gente.</li>
+        <li>Para sua segurança, podemos pedir uma confirmação de identidade antes de concluir.</li>
+      </ol>
+      <p style="margin-top:12px">Respondemos em até <strong>15 dias</strong>. Dados que a lei ou a regulação nos obrigam a guardar serão mantidos apenas pelo prazo exigido e depois eliminados; nesse caso, explicamos o motivo na resposta.</p>
+      <a class="btn btn-zap" href="https://wa.me/5573998288566?text=Quero%20excluir%20meus%20dados" target="_blank" rel="noopener">Pedir exclusão pelo WhatsApp</a>
+    </div>
+    <p style="margin-top:14px">Para parar de receber ofertas pelo WhatsApp, basta responder <strong>SAIR</strong>.</p>
+
+    <h2 id="cookies">10. Cookies</h2>
+    <p>Este site não usa cookies de publicidade nem de rastreamento. Podem existir apenas registros técnicos necessários ao funcionamento e à segurança da página.</p>
+
+    <h2 id="contato">11. Contato e encarregado de dados</h2>
+    <p>Para dúvidas sobre esta política ou para exercer seus direitos, fale com a gente pelo WhatsApp <a href="https://wa.me/5573998288566" target="_blank" rel="noopener">(73) 9 9828-8566</a> ou pelo e-mail <a href="mailto:lucas@facilitecredito.com.br">lucas@facilitecredito.com.br</a>. Este canal funciona como canal de comunicação com o titular, conforme a LGPD e a Resolução CD/ANPD nº 2/2022, que trata dos agentes de tratamento de pequeno porte.</p>
+
+    <h2 id="alteracoes">12. Alterações nesta política</h2>
+    <p>Podemos atualizar esta política para refletir mudanças na lei ou nos nossos serviços. A versão vigente estará sempre nesta página, com a data da última atualização no topo.</p>
+  </article>
+</div>
+</main>
+
+<footer class="base claro">
+  <div class="wrap">
+    <div class="grade">
+      <div>
+        <a class="logo" href="/"><svg width="46" height="46" viewBox="0 0 100 100" aria-hidden="true">
+  <rect x="12" y="28" width="60" height="58" fill="none" stroke="#FB7303" stroke-width="5" transform="rotate(-3 42 57)"/>
+  <rect x="19" y="21" width="60" height="58" fill="none" stroke="#fff" stroke-width="5" transform="rotate(-3 49 50)"/>
+  <path d="M22 47 L37 40 L50 59 L83 6 L98 11 L53 81 Z" fill="#FB7303"/>
+</svg><span><b>Facilite</b><small>CRÉDITO</small></span></a>
+        <p style="margin-top:18px;max-width:380px">Correspondente bancário há 10 anos, especialista em convênios. Atendimento humano do começo ao fim.</p>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="https://wa.me/5573998288566" target="_blank" rel="noopener">WhatsApp (73) 9 9828-8566</a></li>
+          <li><a href="https://www.instagram.com/facilitecredito/" target="_blank" rel="noopener">Instagram @facilitecredito</a></li>
+          <li><a href="mailto:lucas@facilitecredito.com.br">lucas@facilitecredito.com.br</a></li>
+          <li>Rua Álvares Cabral, 01, Centro, Jequié/BA, CEP 45200-256</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Institucional</h4>
+        <ul>
+          <li><a href="/politicadeprivacidade">Política de Privacidade</a></li>
+          <li><a href="/termosdeuso">Termos de Uso</a></li>
+          <li><a href="/politicadeprivacidade#exclusao-de-dados">Excluir meus dados</a></li>
+          <li><a href="/#duvidas">Perguntas frequentes</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">
+      Total Administração e Serviços LTDA, CNPJ 28.441.609/0001-15. 
+      A Facilite Crédito atua como correspondente bancário, prestando serviços de atendimento em nome das instituições financeiras contratantes, nos termos da Resolução CMN nº 4.935/2021. Não somos banco e não concedemos crédito diretamente. Todo crédito está sujeito a análise e aprovação da instituição financeira. Antes de contratar, consulte as condições, a taxa de juros e o Custo Efetivo Total (CET) da operação. A Facilite Crédito não cobra nenhum valor antecipado para liberar crédito.
+    </p>
+  </div>
+</footer>
+
+<a class="flutuante" href="https://wa.me/5573998288566" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg width="32" height="32" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.4Z"/></svg></a>
+</body>
+</html>

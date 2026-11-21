@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Termos de Uso | Facilite Crédito</title>
+<meta name="description" content="Condições de uso do site e dos canais de atendimento da Facilite Crédito, correspondente bancário.">
+<link rel="canonical" href="https://www.facilitecredito.com.br/termosdeuso">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Termos de Uso | Facilite Crédito">
+<meta property="og:description" content="Condições de uso do site e dos canais de atendimento da Facilite Crédito, correspondente bancário.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta name="theme-color" content="#001E5A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Montserrat:wght@600;700;800;900&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --marinho: #001E5A; --escuro: #011538; --laranja: #FB7303; --laranja-claro: #FF9A3D;
+    --creme: #F7F3EC; --tinta: #0E1B3D; --cinza: #4A5674; --linha: #E4DED3; --branco: #fff;
+    --raio: 22px; --max: 1160px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { font-family: "Nunito Sans", sans-serif; font-size: 18px; line-height: 1.6; color: var(--tinta); background: var(--creme); }
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: "Montserrat", sans-serif; line-height: 1.08; letter-spacing: -.02em; }
+  .wrap { width: min(var(--max), 100% - 40px); margin-inline: auto; }
+  .olho { display: inline-flex; align-items: center; gap: 12px; font-family: "Montserrat"; font-weight: 700; font-size: 14px; letter-spacing: .16em; text-transform: uppercase; color: var(--laranja); }
+  .olho::before { content: ""; width: 34px; height: 3px; background: currentColor; border-radius: 2px; }
+
+  /* Botões */
+  .btn { display: inline-flex; align-items: center; gap: 12px; font-family: "Montserrat"; font-weight: 800; font-size: 17px; text-decoration: none;
+         padding: 16px 26px; border-radius: 999px; transition: transform .2s, box-shadow .2s, background .2s; }
+  .btn:focus-visible { outline: 3px solid var(--laranja-claro); outline-offset: 3px; }
+  .btn-zap { background: var(--laranja); color: #fff; box-shadow: 0 8px 0 rgba(0,0,0,.18); }
+  .btn-zap:hover { transform: translateY(-2px); box-shadow: 0 10px 0 rgba(0,0,0,.18); }
+  .btn-linha { border: 2px solid currentColor; }
+  .btn-linha:hover { background: rgba(255,255,255,.08); }
+  .btn svg { flex: none; }
+
+  /* Cabeçalho */
+  header.topo { position: sticky; top: 0; z-index: 20; background: rgba(247,243,236,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--linha); }
+  header.topo .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 20px; }
+  .logo { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo b { display: block; font-family: "Comfortaa"; font-size: 28px; line-height: .9; color: var(--marinho); }
+  .logo small { display: block; font-family: "Montserrat"; font-weight: 700; font-size: 10px; letter-spacing: .42em; color: var(--laranja); text-align: center; margin-top: 4px; }
+  .claro .logo b { color: #fff; }
+  nav.menu { display: flex; gap: 28px; font-family: "Montserrat"; font-weight: 700; font-size: 15px; }
+  nav.menu a { text-decoration: none; color: var(--marinho); }
+  nav.menu a:hover { color: var(--laranja); }
+  header.topo .btn { padding: 12px 20px; font-size: 15px; box-shadow: none; }
+  @media (max-width: 900px) { nav.menu { display: none; } }
+  @media (max-width: 520px) { header.topo .btn span { display: none; } header.topo .btn { padding: 12px; } }
+
+  /* Rodapé */
+  footer.base { background: var(--escuro); color: #C9D1E6; padding: 64px 0 36px; font-size: 16px; }
+  footer.base .grade { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+  footer.base h4 { font-family: "Montserrat"; color: #fff; font-size: 15px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
+  footer.base ul { list-style: none; display: grid; gap: 8px; }
+  footer.base a { text-decoration: none; } footer.base a:hover { color: var(--laranja-claro); }
+  footer.base .legal { margin-top: 44px; padding-top: 26px; border-top: 1px solid rgba(255,255,255,.12); font-size: 14px; line-height: 1.55; color: #9AA6C4; }
+  @media (max-width: 800px) { footer.base .grade { grid-template-columns: 1fr; } }
+
+  /* Botão flutuante */
+  .flutuante { position: fixed; right: 18px; bottom: 18px; z-index: 30; width: 62px; height: 62px; border-radius: 50%; background: #25D366; display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sobe { opacity: 0; transform: translateY(18px); animation: sobe .7s cubic-bezier(.2,.7,.2,1) forwards; }
+    .d1 { animation-delay: .08s } .d2 { animation-delay: .18s } .d3 { animation-delay: .28s } .d4 { animation-delay: .4s }
+    @keyframes sobe { to { opacity: 1; transform: none; } }
+  }
+  
+  .capa { background: var(--marinho); color: #fff; padding: 72px 0 60px; position: relative; overflow: hidden; }
+  .capa::before { content: ""; position: absolute; right: -10%; top: -60%; width: 30%; height: 240%; background: var(--laranja); transform: rotate(24deg); }
+  .capa .wrap { position: relative; }
+  .capa h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 900; margin-top: 14px; }
+  .capa p { color: #C9D1E6; margin-top: 12px; font-size: 17px; }
+  .doc { display: grid; grid-template-columns: 260px 1fr; gap: 56px; padding: 64px 0 96px; }
+  .indice { position: sticky; top: 100px; align-self: start; font-size: 15px; }
+  .indice b { font-family: "Montserrat"; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--laranja); }
+  .indice ol { margin-top: 12px; padding-left: 20px; display: grid; gap: 6px; color: var(--cinza); }
+  .indice a { text-decoration: none; } .indice a:hover { color: var(--laranja); }
+  .texto { max-width: 760px; }
+  .texto h2 { font-size: 26px; font-weight: 800; color: var(--marinho); margin: 46px 0 14px; scroll-margin-top: 100px; }
+  .texto h2:first-child { margin-top: 0; }
+  .texto p, .texto li { color: #2F3B5A; font-size: 18px; }
+  .texto p + p { margin-top: 12px; }
+  .texto ul { margin: 12px 0 0 22px; display: grid; gap: 8px; }
+  .texto strong { color: var(--tinta); }
+  .caixa { background: #fff; border: 1px solid var(--linha); border-left: 6px solid var(--laranja); border-radius: 16px; padding: 22px 26px; margin-top: 18px; }
+  .caixa .btn { margin-top: 14px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 16px; background: #fff; border-radius: 14px; overflow: hidden; }
+  th, td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--linha); vertical-align: top; }
+  th { font-family: "Montserrat"; font-size: 14px; background: var(--marinho); color: #fff; }
+  @media (max-width: 900px) { .doc { grid-template-columns: 1fr; } .indice { position: static; } table { font-size: 15px; } }
+
+</style>
+</head>
+<body>
+<header class="topo">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="Facilite Crédito, página inicial"><svg width="46" height="46" viewBox="0 0 100 100" aria-hidden="true">
+  <rect x="12" y="28" width="60" height="58" fill="none" stroke="#FB7303" stroke-width="5" transform="rotate(-3 42 57)"/>
+  <rect x="19" y="21" width="60" height="58" fill="none" stroke="#001E5A" stroke-width="5" transform="rotate(-3 49 50)"/>
+  <path d="M22 47 L37 40 L50 59 L83 6 L98 11 L53 81 Z" fill="#FB7303"/>
+</svg><span><b>Facilite</b><small>CRÉDITO</small></span></a>
+    <nav class="menu" aria-label="Seções">
+      <a href="/#para-quem">Para quem</a><a href="/#como-funciona">Como funciona</a><a href="/#seguranca">Segurança</a><a href="/#duvidas">Dúvidas</a>
+    </nav>
+    <a class="btn btn-zap" href="https://wa.me/5573998288566" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.4Z"/></svg><span>Falar no WhatsApp</span></a>
+  </div>
+</header>
+
+<main>
+
+<section class="capa">
+  <div class="wrap">
+    <span class="olho">Site e canais de atendimento</span>
+    <h1>Termos de Uso</h1>
+    <p>Versão 1.0, atualizada em 18 de novembro de 2026.</p>
+  </div>
+</section>
+
+<div class="wrap doc">
+  <nav class="indice" aria-label="Índice">
+    <b>Nesta página</b>
+    <ol>
+      <li><a href="#aceite">Aceite</a></li><li><a href="#quem-somos">Quem somos</a></li><li><a href="#servicos">Nossos serviços</a></li>
+      <li><a href="#sem-cobranca">Nenhuma cobrança antecipada</a></li><li><a href="#seu-compromisso">Seu compromisso</a></li><li><a href="#canais">Canais de atendimento</a></li>
+      <li><a href="#conteudo">Conteúdo e marca</a></li><li><a href="#responsabilidade">Responsabilidades</a></li><li><a href="#privacidade">Privacidade</a></li>
+      <li><a href="#alteracoes">Alterações</a></li><li><a href="#lei">Lei e foro</a></li>
+    </ol>
+  </nav>
+
+  <article class="texto">
+    <h2 id="aceite">1. Aceite</h2>
+    <p>Estes Termos de Uso valem para o site www.facilitecredito.com.br e para os canais de atendimento da Facilite Crédito (WhatsApp, Instagram, Facebook e loja). Ao usar esses canais, você concorda com estas condições. Se não concordar, por favor não use os canais.</p>
+
+    <h2 id="quem-somos">2. Quem somos</h2>
+    <p>A <strong>Facilite Crédito</strong> (Total Administração e Serviços LTDA, CNPJ 28.441.609/0001-15) é um <strong>correspondente bancário</strong>: prestamos serviços de atendimento em nome de bancos e financeiras parceiros, nos termos da Resolução CMN nº 4.935/2021. <strong>Não somos banco</strong> e não concedemos crédito diretamente.</p>
+
+    <h2 id="servicos">3. Nossos serviços</h2>
+    <ul>
+      <li>Orientação sobre produtos de crédito, como consignado do INSS, de servidores públicos (Governo da Bahia, SIAPE e outros convênios), consignado CLT, portabilidade, refinanciamento e antecipação do saque-aniversário do FGTS.</li>
+      <li>Simulações, consulta de margem com a sua autorização, coleta de documentos e encaminhamento da proposta à instituição financeira escolhida.</li>
+      <li>Acompanhamento do processo até a conclusão.</li>
+    </ul>
+    <p>As <strong>simulações são estimativas</strong>. A aprovação, a taxa de juros, o prazo, o Custo Efetivo Total (CET) e as demais condições são definidos pela instituição financeira, após a análise dela, e constam do contrato que você assina diretamente com ela. Nenhuma informação do site ou do atendimento é promessa de aprovação.</p>
+
+    <h2 id="sem-cobranca">4. Nenhuma cobrança antecipada</h2>
+    <div class="caixa"><strong>A Facilite Crédito não cobra nenhum valor do cliente</strong> para fazer simulação, consulta ou para liberar crédito, e nunca pede depósito, PIX, boleto ou senha bancária. Se alguém fizer esse tipo de pedido em nosso nome, é golpe: não pague e fale com a gente pelo número oficial.</div>
+
+    <h2 id="seu-compromisso">5. Seu compromisso</h2>
+    <ul>
+      <li>Fornecer informações verdadeiras e documentos autênticos e atualizados, em seu próprio nome.</li>
+      <li>Ler o contrato e conferir as condições, inclusive o CET, antes de assinar.</li>
+      <li>Não usar nossos canais para fins ilegais, para enviar conteúdo ofensivo ou para se passar por outra pessoa.</li>
+    </ul>
+
+    <h2 id="canais">6. Canais de atendimento</h2>
+    <p>Nosso canal oficial é o WhatsApp (73) 9 9828-8566 e o perfil @facilitecredito no Instagram. Mensagens podem ser respondidas por nossa equipe e, em alguns momentos, por respostas automáticas que ajudam a organizar o atendimento. Sempre que precisar, você pode pedir para falar com uma pessoa. O atendimento acontece em horário comercial.</p>
+    <p>Se você aceitar receber novidades e ofertas, pode deixar de receber a qualquer momento respondendo <strong>SAIR</strong>.</p>
+
+    <h2 id="conteudo">7. Conteúdo e marca</h2>
+    <p>Textos, imagens, logotipos e o nome Facilite Crédito pertencem à empresa ou são usados com autorização. Você pode compartilhar nossos posts e páginas, mas não pode copiá-los ou usá-los para fins comerciais nem para se passar pela Facilite Crédito. Os conteúdos educativos têm caráter informativo e não substituem a leitura do contrato.</p>
+    <p>O site pode ter links para páginas de terceiros, como bancos e órgãos públicos. Não controlamos esses sites e não respondemos pelo conteúdo deles.</p>
+
+    <h2 id="responsabilidade">8. Responsabilidades</h2>
+    <p>Nos esforçamos para manter as informações corretas e atualizadas, mas regras de convênios, margens e produtos mudam com frequência. A Facilite Crédito não responde por decisões tomadas apenas com base em conteúdo informativo, nem por indisponibilidades temporárias do site ou dos aplicativos de mensagens. Nada nestes termos afasta os seus direitos previstos no Código de Defesa do Consumidor.</p>
+
+    <h2 id="privacidade">9. Privacidade</h2>
+    <p>O tratamento dos seus dados pessoais segue a nossa <a href="/politicadeprivacidade">Política de Privacidade</a>, que faz parte destes termos.</p>
+
+    <h2 id="alteracoes">10. Alterações</h2>
+    <p>Podemos atualizar estes termos a qualquer momento. A versão vigente estará sempre nesta página, com a data da última atualização no topo.</p>
+
+    <h2 id="lei">11. Lei e foro</h2>
+    <p>Estes termos seguem a legislação brasileira. Eventuais conflitos poderão ser resolvidos no foro do domicílio do consumidor. Dúvidas? Fale com a gente pelo WhatsApp <a href="https://wa.me/5573998288566" target="_blank" rel="noopener">(73) 9 9828-8566</a> ou pelo e-mail <a href="mailto:lucas@facilitecredito.com.br">lucas@facilitecredito.com.br</a>.</p>
+  </article>
+</div>
+</main>
+
+<footer class="base claro">
+  <div class="wrap">
+    <div class="grade">
+      <div>
+        <a class="logo" href="/"><svg width="46" height="46" viewBox="0 0 100 100" aria-hidden="true">
+  <rect x="12" y="28" width="60" height="58" fill="none" stroke="#FB7303" stroke-width="5" transform="rotate(-3 42 57)"/>
+  <rect x="19" y="21" width="60" height="58" fill="none" stroke="#fff" stroke-width="5" transform="rotate(-3 49 50)"/>
+  <path d="M22 47 L37 40 L50 59 L83 6 L98 11 L53 81 Z" fill="#FB7303"/>
+</svg><span><b>Facilite</b><small>CRÉDITO</small></span></a>
+        <p style="margin-top:18px;max-width:380px">Correspondente bancário há 10 anos, especialista em convênios. Atendimento humano do começo ao fim.</p>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="https://wa.me/5573998288566" target="_blank" rel="noopener">WhatsApp (73) 9 9828-8566</a></li>
+          <li><a href="https://www.instagram.com/facilitecredito/" target="_blank" rel="noopener">Instagram @facilitecredito</a></li>
+          <li><a href="mailto:lucas@facilitecredito.com.br">lucas@facilitecredito.com.br</a></li>
+          <li>Rua Álvares Cabral, 01, Centro, Jequié/BA, CEP 45200-256</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Institucional</h4>
+        <ul>
+          <li><a href="/politicadeprivacidade">Política de Privacidade</a></li>
+          <li><a href="/termosdeuso">Termos de Uso</a></li>
+          <li><a href="/politicadeprivacidade#exclusao-de-dados">Excluir meus dados</a></li>
+          <li><a href="/#duvidas">Perguntas frequentes</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">
+      Total Administração e Serviços LTDA, CNPJ 28.441.609/0001-15. 
+      A Facilite Crédito atua como correspondente bancário, prestando serviços de atendimento em nome das instituições financeiras contratantes, nos termos da Resolução CMN nº 4.935/2021. Não somos banco e não concedemos crédito diretamente. Todo crédito está sujeito a análise e aprovação da instituição financeira. Antes de contratar, consulte as condições, a taxa de juros e o Custo Efetivo Total (CET) da operação. A Facilite Crédito não cobra nenhum valor antecipado para liberar crédito.
+    </p>
+  </div>
+</footer>
+
+<a class="flutuante" href="https://wa.me/5573998288566" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg width="32" height="32" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.3-.2-.6-.4Z"/></svg></a>
+</body>
+</html>
